@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_blue">
+    android:background="@color/blue_navy">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,8 +18,9 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="60dp"
+            android:fontFamily="@font/aldrich"
             android:gravity="center"
-            android:textColor="@color/light_white"
+            android:textColor="@color/green_light"
             android:textSize="70sp"
             android:textStyle="bold"
             tools:text="4,56" />
@@ -28,8 +29,9 @@
             android:id="@+id/activity_details_currency_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
             android:gravity="center"
-            android:textColor="@color/light_white"
+            android:textColor="@color/green_light"
             android:textSize="40sp"
             tools:text="PLN" />
 
@@ -38,10 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/light_white"
+            android:background="@color/gray_light"
+            android:fontFamily="@font/aldrich"
             android:gravity="center"
             android:padding="8dp"
-            android:textColor="@color/light_blue"
+            android:textColor="@color/blue_navy"
             android:textSize="30sp"
             tools:text="2013-03-17" />
 
