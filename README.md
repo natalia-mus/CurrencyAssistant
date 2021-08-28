@@ -1,4 +1,4 @@
-# EuroExchangeRate
+# Euro Exchange Rate
 
 Euro Exchange Rate is a simple Android app displaying daily exchange rates for Euro. Scrolling allows to see rates from the previous days.
 
