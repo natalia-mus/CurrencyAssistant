@@ -9,12 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.euroexchangerate.Constants
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.RatesAdapter
 import com.example.euroexchangerate.adapter.SingleDayAdapter
 import com.example.euroexchangerate.data.RateDetails
 import com.example.euroexchangerate.data.SingleDay
 import com.example.euroexchangerate.viewmodel.MainActivityViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
 
@@ -23,8 +25,9 @@ class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var adapter: SingleDayAdapter
     lateinit var progressBar: ProgressBar
-    private var todayAlreadyFetched = false
-    private var scrollPosition = 0
+    lateinit var navigation: BottomNavigationView
+    private var _todayAlreadyFetched = false
+    private var _scrollPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,9 @@ class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         recyclerView = findViewById(R.id.activity_main_recyclerView)
         progressBar = findViewById(R.id.activity_main_progressBar)
+        navigation = findViewById(R.id.activity_main_bottomNavigation)
 
+        setOnNavigationItemSelectedListener()
         setObservers()
         setListeners()
         renewVariables(savedInstanceState)
@@ -41,25 +46,44 @@ class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("todayAlreadyFetched", todayAlreadyFetched)
-        outState.putInt("scrollPosition", scrollPosition)
+        outState.putBoolean(Constants.TODAY_ALREADY_FETCHED, _todayAlreadyFetched)
+        outState.putInt(Constants.SCROLL_POSITION, _scrollPosition)
+    }
+
+    private fun setOnNavigationItemSelectedListener() {
+        navigation.setOnItemSelectedListener() {
+            when (it.itemId) {
+                R.id.rates -> rates()
+                R.id.converter -> converter()
+            }
+
+            true
+        }
+    }
+
+    private fun rates() {
+        // TODO
+    }
+
+    private fun converter() {
+         // TODO
     }
 
     private fun setObservers() {
-        viewModel.selectedDateRates.observe(this, { updateView(it) })
-        viewModel.loading.observe(this, { loading(it) })
-        viewModel.success.observe(this, { responseStatusAction(it) })
+        viewModel.selectedDateRates.observe(this) { updateView(it) }
+        viewModel.loading.observe(this) { loading(it) }
+        viewModel.success.observe(this) { responseStatusAction(it) }
     }
 
     private fun setListeners() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val bottom = recyclerView.getChildAt(0).height - recyclerView.height
-                scrollPosition += dy
+                _scrollPosition += dy
 
-                if (scrollPosition >= bottom) {
+                if (_scrollPosition >= bottom) {
                     viewModel.getNewData()
-                    scrollPosition = 0
+                    _scrollPosition = 0
                 }
 
                 super.onScrolled(recyclerView, dx, dy)
@@ -69,21 +93,21 @@ class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
     }
 
     private fun renewVariables(savedInstanceState: Bundle?) {
-        val _todayAlreadyFetched = savedInstanceState?.getBoolean("todayAlreadyFetched")
+        val todayAlreadyFetched = savedInstanceState?.getBoolean(Constants.TODAY_ALREADY_FETCHED)
 
-        if (_todayAlreadyFetched != null) {
-            todayAlreadyFetched = _todayAlreadyFetched
+        if (todayAlreadyFetched != null) {
+            _todayAlreadyFetched = todayAlreadyFetched
         }
 
-        if (!todayAlreadyFetched) {
+        if (!_todayAlreadyFetched) {
             viewModel.getNewData()
-            todayAlreadyFetched = true
+            _todayAlreadyFetched = true
         }
 
-        val _scrollPosition = savedInstanceState?.getInt("scrollPosition")
+        val scrollPosition = savedInstanceState?.getInt(Constants.SCROLL_POSITION)
 
-        if (_scrollPosition != null) {
-            scrollPosition = _scrollPosition
+        if (scrollPosition != null) {
+            _scrollPosition = scrollPosition
         }
 
     }
@@ -115,7 +139,7 @@ class MainActivity : AppCompatActivity(), RatesAdapter.OnItemClickAction {
 
     override fun itemClicked(rateDetails: RateDetails) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra("rateDetails", rateDetails)
+        intent.putExtra(Constants.RATE_DETAILS, rateDetails)
         startActivity(intent)
     }
 

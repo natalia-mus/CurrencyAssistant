@@ -33,8 +33,7 @@ class MainActivityViewModel : ViewModel() {
                 if (data?.success == true) {
                     array.add(data)
                     selectedDateRates.value = array
-                    val _daysInRecycler = daysInRecycler.value
-                    daysInRecycler.value = _daysInRecycler?.plus(1)
+                    daysInRecycler.value = daysInRecycler.value?.toInt()?.plus(1)
                     success.value = true
                 } else {
                     success.value = false

@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Euro Exchange Rate</string>
+    <string name="converter">Converter</string>
     <string name="error">An error occurred. Data can not be loaded.</string>
+    <string name="rates">Rates</string>
+
     <string name="euro">1€:</string>
     <string name="aed">AED</string>
     <string name="ang">ANG</string>

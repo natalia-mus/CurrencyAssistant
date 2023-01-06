@@ -3,6 +3,7 @@ package com.example.euroexchangerate.view
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.euroexchangerate.Constants
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
 
@@ -18,8 +19,8 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        if (intent.hasExtra("rateDetails")) {
-            rateDetails = intent.getParcelableExtra("rateDetails")
+        if (intent.hasExtra(Constants.RATE_DETAILS)) {
+            rateDetails = intent.getParcelableExtra(Constants.RATE_DETAILS)
         }
 
         setView()
