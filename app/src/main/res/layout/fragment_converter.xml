@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/blue_navy">
 
     <ImageView
@@ -45,25 +45,50 @@
             android:background="@color/white_transparent">
 
             <ImageView
-                android:layout_width="100dp"
                 android:id="@+id/fragment_converter_base_flag"
-                android:src="@drawable/eur_flag"
+                android:layout_width="160dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                app:layout_constraintWidth_percent=".15"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/eur_flag"
                 app:layout_constraintBottom_toTopOf="@+id/fragment_converter_base_value"
-                app:layout_constraintHeight_percent=".65"
-                android:layout_height="50dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_converter_base_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/aldrich"
+                android:textColor="@color/green_light"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_converter_base_flag"
+                tools:text="EUR" />
+
+            <TextView
+                android:id="@+id/fragment_converter_base_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/aldrich"
+                android:textColor="@color/green_light"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_converter_base_code"
+                tools:text="EURO" />
 
             <EditText
                 android:id="@+id/fragment_converter_base_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/guideline"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="60dp"
@@ -72,10 +97,13 @@
                 android:textColor="@color/green_light"
                 android:textSize="70sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/guideline_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="3.20" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
+                android:id="@+id/guideline_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -83,11 +111,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_converter_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_converter_result"
             android:layout_weight="1">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.15" />
 
             <TextView
                 android:id="@+id/fragment_converter_result_value"
@@ -95,15 +130,60 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginBottom="60dp"
                 android:fontFamily="@font/aldrich"
                 android:gravity="center"
+                android:paddingVertical="10dp"
                 android:textColor="@color/green_light"
                 android:textSize="70sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
                 tools:text="14.30" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/fragment_converter_result_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/aldrich"
+                android:textColor="@color/green_light"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_value"
+                tools:text="PLN" />
+
+            <TextView
+                android:id="@+id/fragment_converter_result_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/aldrich"
+                android:textAlignment="center"
+                android:textColor="@color/green_light"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_code"
+                tools:text="POLISH ZLOTY" />
+
+            <ImageView
+                android:id="@+id/fragment_converter_result_flag"
+                android:layout_width="160dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/pln_flag"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
