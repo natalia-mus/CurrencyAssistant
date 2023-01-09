@@ -44,46 +44,57 @@
             android:layout_weight="1"
             android:background="@color/white_transparent">
 
-            <ImageView
-                android:id="@+id/fragment_converter_base_flag"
-                android:layout_width="160dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/eur_flag"
-                app:layout_constraintBottom_toTopOf="@+id/fragment_converter_base_value"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/fragment_converter_base_code"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_converter_base_currency_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/aldrich"
-                android:textColor="@color/green_light"
-                android:textSize="30sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_value"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_converter_base_flag"
-                tools:text="EUR" />
+                app:layout_constraintStart_toStartOf="parent">
 
-            <TextView
-                android:id="@+id/fragment_converter_base_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/aldrich"
-                android:textColor="@color/green_light"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_converter_base_code"
-                tools:text="EURO" />
+                <ImageView
+                    android:id="@+id/fragment_converter_base_flag"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/eur_flag_circle"
+                    app:layout_constraintBottom_toTopOf="@+id/fragment_converter_base_code"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fragment_converter_base_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/aldrich"
+                    android:textColor="@color/green_light"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="EUR" />
+
+                <TextView
+                    android:id="@+id/fragment_converter_base_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/aldrich"
+                    android:textColor="@color/green_light"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_converter_base_code"
+                    tools:text="EURO" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
                 android:id="@+id/fragment_converter_base_value"
@@ -142,46 +153,57 @@
                 app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
                 tools:text="14.30" />
 
-            <TextView
-                android:id="@+id/fragment_converter_result_code"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_converter_result_currency_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/aldrich"
-                android:textColor="@color/green_light"
-                android:textSize="30sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_value"
-                tools:text="PLN" />
+                app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value">
 
-            <TextView
-                android:id="@+id/fragment_converter_result_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
-                android:fontFamily="@font/aldrich"
-                android:textAlignment="center"
-                android:textColor="@color/green_light"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_code"
-                tools:text="POLISH ZLOTY" />
+                <TextView
+                    android:id="@+id/fragment_converter_result_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/aldrich"
+                    android:textColor="@color/green_light"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="PLN" />
 
-            <ImageView
-                android:id="@+id/fragment_converter_result_flag"
-                android:layout_width="160dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/pln_flag"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value" />
+                <TextView
+                    android:id="@+id/fragment_converter_result_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/aldrich"
+                    android:textAlignment="center"
+                    android:textColor="@color/green_light"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_code"
+                    tools:text="POLISH ZLOTY" />
+
+                <ImageView
+                    android:id="@+id/fragment_converter_result_flag"
+                    android:layout_width="160dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/pln_flag_circle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
