@@ -9,16 +9,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
-import com.example.euroexchangerate.data.Rates
+import com.example.euroexchangerate.data.RatesList
 
 class RatesAdapter(
-    _rates: Rates?,
-    private val date: String?,
+    private val rates: RatesList,
     private val context: Context,
     private val onItemClickAction: OnItemClickAction
 ) :
     RecyclerView.Adapter<RatesViewHolder>() {
-    private var rates: MutableList<RateDetails?> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         return RatesViewHolder(
@@ -27,20 +25,17 @@ class RatesAdapter(
     }
 
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
-        holder.currencyName.text = rates[position]?.currencyCode
-        holder.rating.text = rates[position]?.rating
+        val currency = rates.getCurrency(position)
+
+        holder.currencyName.text = currency.currencyCode
+        holder.rating.text = currency.rating.toString()
 
         holder.row.setOnClickListener() {
-            val currencyName = rates[position]?.currencyCode.toString()
-            val rating = rates[position]?.rating.toString()
-
-            val clickedItem = RateDetails(currencyName, rating, date)
-
-            onItemClickAction.itemClicked(clickedItem)
+            onItemClickAction.itemClicked(currency)
         }
     }
 
-    override fun getItemCount() = rates.size
+    override fun getItemCount() = rates.getSize()
 
 
     interface OnItemClickAction {

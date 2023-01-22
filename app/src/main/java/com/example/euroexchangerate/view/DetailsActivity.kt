@@ -9,7 +9,7 @@ import com.example.euroexchangerate.data.RateDetails
 
 class DetailsActivity : AppCompatActivity() {
 
-    private var rateDetails: RateDetails? = RateDetails("", "", "")
+    private var rateDetails: RateDetails? = RateDetails("",  0.0, "")
 
     private lateinit var rating: TextView
     private lateinit var currencyName: TextView
@@ -31,7 +31,7 @@ class DetailsActivity : AppCompatActivity() {
         currencyName = findViewById(R.id.activity_details_currency_name)
         date = findViewById(R.id.activity_details_date)
 
-        rating.text = rateDetails?.rating
+        rating.text = rateDetails?.rating.toString()
         currencyName.text = rateDetails?.currencyCode
         date.text = rateDetails?.date
     }

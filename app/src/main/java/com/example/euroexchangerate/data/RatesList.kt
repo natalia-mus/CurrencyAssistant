@@ -9,6 +9,12 @@ class RatesList(private val singleDay: SingleDay) {
     private lateinit var currencies: ArrayList<RateDetails>
 
 
+    fun getAllCurrencies(): ArrayList<RateDetails> = currencies
+
+    fun getCurrency(index: Int) = currencies[index]
+
+    fun getDate() = singleDay.date
+
     fun getImage(currencyCode: String): String? {
         var result: String? = null
 
@@ -30,6 +36,8 @@ class RatesList(private val singleDay: SingleDay) {
 
         return result
     }
+
+    fun getSize(): Int = currencies.size
 
     private fun findCurrencyItem(currencyCode: String): RateDetails? {
         var result: RateDetails? = null

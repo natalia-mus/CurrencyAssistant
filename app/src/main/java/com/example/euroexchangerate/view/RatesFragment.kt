@@ -16,7 +16,7 @@ import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.RatesAdapter
 import com.example.euroexchangerate.adapter.SingleDayAdapter
 import com.example.euroexchangerate.data.RateDetails
-import com.example.euroexchangerate.data.SingleDay
+import com.example.euroexchangerate.data.RatesList
 import com.example.euroexchangerate.viewmodel.RatesViewModel
 
 class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
@@ -62,7 +62,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
     }
 
     private fun setObservers() {
-        //viewModel.selectedDateRates.observe(viewLifecycleOwner) { updateView(it) }
+        viewModel.selectedDateRates.observe(viewLifecycleOwner) { updateView(it) }
         viewModel.loading.observe(viewLifecycleOwner) { loading(it) }
         viewModel.success.observe(viewLifecycleOwner) { responseStatusAction(it) }
     }
@@ -104,14 +104,16 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
 
     }
 
-    private fun updateView(data: MutableList<SingleDay?>) {
-        if (::adapter.isInitialized) {
-            adapter.dataSetChanged(data)
-        } else {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = SingleDayAdapter(data, requireContext(), this)
-            recyclerView.layoutManager = layoutManager
-            recyclerView.adapter = adapter
+    private fun updateView(data: RatesList?) {
+        if (data != null) {
+            if (::adapter.isInitialized) {
+                adapter.dataSetChanged(data)
+            } else {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = SingleDayAdapter(data, requireContext(), this)
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = adapter
+            }
         }
     }
 
