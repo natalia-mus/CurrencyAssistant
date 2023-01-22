@@ -62,7 +62,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
     }
 
     private fun setObservers() {
-        viewModel.selectedDateRates.observe(viewLifecycleOwner) { updateView(it) }
+        //viewModel.selectedDateRates.observe(viewLifecycleOwner) { updateView(it) }
         viewModel.loading.observe(viewLifecycleOwner) { loading(it) }
         viewModel.success.observe(viewLifecycleOwner) { responseStatusAction(it) }
     }

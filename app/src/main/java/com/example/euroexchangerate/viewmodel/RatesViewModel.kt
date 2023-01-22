@@ -4,18 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.euroexchangerate.api.Repository
 import com.example.euroexchangerate.api.RepositoryCallback
+import com.example.euroexchangerate.data.RatesList
 import com.example.euroexchangerate.data.SingleDay
 import com.example.euroexchangerate.util.DateUtil
 
 class RatesViewModel : ViewModel() {
 
-    val selectedDateRates =
-        MutableLiveData<MutableList<SingleDay?>>()
+    val selectedDateRates = MutableLiveData<RatesList>()
     val daysInRecycler = MutableLiveData<Int>(0)
     val loading = MutableLiveData<Boolean>(true)
     val success = MutableLiveData<Boolean>()
-
-    var array: MutableList<SingleDay?> = ArrayList()
 
 
     fun getNewData() {
@@ -31,8 +29,7 @@ class RatesViewModel : ViewModel() {
         Repository.getDataFromAPI(date, object : RepositoryCallback<SingleDay> {
             override fun onSuccess(data: SingleDay?) {
                 if (data?.success == true) {
-                    array.add(data)
-                    selectedDateRates.value = array
+                    selectedDateRates.value = RatesList(data)
                     daysInRecycler.value = daysInRecycler.value?.toInt()?.plus(1)
                     success.value = true
                 } else {

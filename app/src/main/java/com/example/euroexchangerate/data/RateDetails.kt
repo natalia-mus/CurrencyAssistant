@@ -5,7 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class RateDetails(
-    val currencyName: String,
-    val rating: String,
+    val currencyCode: String,
+    val rating: Double,
     val date: String?
-) : Parcelable
+) : Parcelable {
+
+    fun getImagePath(): String {
+        return currencyCode + "_flag_circle.png"
+    }
+}

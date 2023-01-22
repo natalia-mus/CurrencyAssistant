@@ -135,4 +135,80 @@ data class Rates(
     val zAR: Double,
     @SerializedName("ZMW")
     val zMW: Double
-)
+) {
+
+    fun getRateByCurrencyCode(currencyCode: String): Double? {
+        var result: Double? = null
+
+        when (currencyCode) {
+            CurrencyCode.AED -> result = aED
+            CurrencyCode.ALL -> result = aLL
+            CurrencyCode.ANG -> result = aNG
+            CurrencyCode.AOA -> result = aOA
+            CurrencyCode.ARS -> result = aRS
+            CurrencyCode.AUD -> result = aUD
+            CurrencyCode.BAM -> result = bAM
+            CurrencyCode.BGN -> result = bGN
+            CurrencyCode.BOB -> result = bOB
+            CurrencyCode.BRL -> result = bRL
+            CurrencyCode.BTC -> result = bTC
+            CurrencyCode.BYR -> result = bYR
+            CurrencyCode.CAD -> result = cAD
+            CurrencyCode.CHF -> result = cHF
+            CurrencyCode.CLP -> result = cLP
+            CurrencyCode.CNY -> result = cNY
+            CurrencyCode.COP -> result = cOP
+            CurrencyCode.CRC -> result = cRC
+            CurrencyCode.CUP -> result = cUP
+            CurrencyCode.CZK -> result = cZK
+            CurrencyCode.DKK -> result = dKK
+            CurrencyCode.EGP -> result = eGP
+            CurrencyCode.GBP -> result = gBP
+            CurrencyCode.GEL -> result = gEL
+            CurrencyCode.GIP -> result = gIP
+            CurrencyCode.HNL -> result = hNL
+            CurrencyCode.HRK -> result = hRK
+            CurrencyCode.HUF -> result = hUF
+            CurrencyCode.IDR -> result = iDR
+            CurrencyCode.ILS -> result = iLS
+            CurrencyCode.INR -> result = iNR
+            CurrencyCode.JPY -> result = jPY
+            CurrencyCode.KRW -> result = kRW
+            CurrencyCode.KWD -> result = kWD
+            CurrencyCode.KZT -> result = kZT
+            CurrencyCode.LYD -> result = lYD
+            CurrencyCode.MAD -> result = mAD
+            CurrencyCode.MDL -> result = mDL
+            CurrencyCode.MNT -> result = mNT
+            CurrencyCode.MXN -> result = mXN
+            CurrencyCode.MYR -> result = mYR
+            CurrencyCode.NGN -> result = nGN
+            CurrencyCode.NOK -> result = nOK
+            CurrencyCode.NZD -> result = nZD
+            CurrencyCode.OMR -> result = oMR
+            CurrencyCode.PAB -> result = pAB
+            CurrencyCode.PEN -> result = pEN
+            CurrencyCode.PHP -> result = pHP
+            CurrencyCode.PLN -> result = pLN
+            CurrencyCode.PYG -> result = pYG
+            CurrencyCode.QAR -> result = qAR
+            CurrencyCode.RUB -> result = rUB
+            CurrencyCode.SAR -> result = sAR
+            CurrencyCode.SEK -> result = sEK
+            CurrencyCode.SGD -> result = sGD
+            CurrencyCode.SLL -> result = sLL
+            CurrencyCode.SYP -> result = sYP
+            CurrencyCode.THB -> result = tHB
+            CurrencyCode.TND -> result = tND
+            CurrencyCode.UAH -> result = uAH
+            CurrencyCode.USD -> result = uSD
+            CurrencyCode.VEF -> result = vEF
+            CurrencyCode.VND -> result = vND
+            CurrencyCode.YER -> result = yER
+            CurrencyCode.ZAR -> result = zAR
+            CurrencyCode.ZMW -> result = zMW
+        }
+
+        return result
+    }
+}
