@@ -9,10 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
-import com.example.euroexchangerate.data.RatesList
 
 class RatesAdapter(
-    private val rates: RatesList,
+    private val currencies: ArrayList<RateDetails>,
     private val context: Context,
     private val onItemClickAction: OnItemClickAction
 ) :
@@ -25,7 +24,7 @@ class RatesAdapter(
     }
 
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
-        val currency = rates.getCurrency(position)
+        val currency = currencies[position]
 
         holder.currencyName.text = currency.currencyCode
         holder.rating.text = currency.rating.toString()
@@ -35,7 +34,7 @@ class RatesAdapter(
         }
     }
 
-    override fun getItemCount() = rates.getSize()
+    override fun getItemCount() = currencies.size
 
 
     interface OnItemClickAction {

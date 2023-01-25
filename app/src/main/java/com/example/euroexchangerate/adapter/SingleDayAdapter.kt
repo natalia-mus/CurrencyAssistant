@@ -8,30 +8,28 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
-import com.example.euroexchangerate.data.RatesList
+import com.example.euroexchangerate.data.SingleDay
 
 class SingleDayAdapter(
-    private var data: RatesList,
+    private var data: MutableList<SingleDay>,
     private val context: Context,
     private val onItemClickAction: RatesAdapter.OnItemClickAction
 ) : RecyclerView.Adapter<SingleDayViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleDayViewHolder {
-        return SingleDayViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.single_day_item, parent, false)
-        )
+        return SingleDayViewHolder(LayoutInflater.from(context).inflate(R.layout.single_day_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: SingleDayViewHolder, position: Int) {
-        holder.date.text = data.getDate()
+        holder.date.text = data[position].date
 
         holder.ratesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        holder.ratesRecyclerView.adapter = RatesAdapter(data, context, onItemClickAction)
+        holder.ratesRecyclerView.adapter = RatesAdapter(data[position].getCurrenciesList(), context, onItemClickAction)
     }
 
-    override fun getItemCount() = data.getSize()
+    override fun getItemCount() = data.size
 
-    fun dataSetChanged(data: RatesList) {
+    fun dataSetChanged(data: MutableList<SingleDay>) {
         this.data = data
         notifyDataSetChanged()
     }
