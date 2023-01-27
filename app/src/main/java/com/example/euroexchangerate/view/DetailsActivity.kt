@@ -35,7 +35,7 @@ class DetailsActivity : AppCompatActivity() {
         date = findViewById(R.id.activity_details_date)
 
         rating.text = rateDetails.rating.toString()
-        currencyName.text = rateDetails.currencyCode
+        currencyName.text = rateDetails.currencyCode.name
         date.text = rateDetails.date
     }
 }

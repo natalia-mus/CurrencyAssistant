@@ -26,7 +26,7 @@ class RatesAdapter(
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
         val currency = currencies[position]
 
-        holder.currencyName.text = currency.currencyCode
+        holder.currencyName.text = currency.currencyCode.name
         holder.rating.text = currency.rating.toString()
 
         holder.row.setOnClickListener() {

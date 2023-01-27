@@ -1,70 +1,70 @@
 package com.example.euroexchangerate.data
 
-object CurrencyCode {
-    const val AED = "AED"
-    const val ALL = "ALL"
-    const val ANG = "ANG"
-    const val AOA = "AOA"
-    const val ARS = "ARS"
-    const val AUD = "AUD"
-    const val BAM = "BAM"
-    const val BGN = "BGN"
-    const val BOB = "BOB"
-    const val BRL = "BRL"
-    const val BTC = "BTC"
-    const val BYR = "BYR"
-    const val CAD = "CAD"
-    const val CHF = "CHF"
-    const val CLP = "CLP"
-    const val CNY = "CNY"
-    const val COP = "COP"
-    const val CRC = "CRC"
-    const val CUP = "CUP"
-    const val CZK = "CZK"
-    const val DKK = "DKK"
-    const val EGP = "EGP"
-    const val GBP = "GBP"
-    const val GEL = "GEL"
-    const val GIP = "GIP"
-    const val HNL = "HNL"
-    const val HRK = "HRK"
-    const val HUF = "HUF"
-    const val IDR = "IDR"
-    const val ILS = "ILS"
-    const val INR = "INR"
-    const val JPY = "JPY"
-    const val KRW = "KRW"
-    const val KWD = "KWD"
-    const val KZT = "KZT"
-    const val LYD = "LYD"
-    const val MAD = "MAD"
-    const val MDL = "MDL"
-    const val MNT = "MNT"
-    const val MXN = "MXN"
-    const val MYR = "MYR"
-    const val NGN = "NGN"
-    const val NOK = "NOK"
-    const val NZD = "NZD"
-    const val OMR = "OMR"
-    const val PAB = "PAB"
-    const val PEN = "PEN"
-    const val PHP = "PHP"
-    const val PLN = "PLN"
-    const val PYG = "PYG"
-    const val QAR = "QAR"
-    const val RUB = "RUB"
-    const val SAR = "SAR"
-    const val SEK = "SEK"
-    const val SGD = "SGD"
-    const val SLL = "SLL"
-    const val SYP = "SYP"
-    const val THB = "THB"
-    const val TND = "TND"
-    const val UAH = "UAH"
-    const val USD = "USD"
-    const val VEF = "VEF"
-    const val VND = "VND"
-    const val YER = "YER"
-    const val ZAR = "ZAR"
-    const val ZMW = "ZMW"
+enum class CurrencyCode(code: String) {
+    AED("AED"),
+    ALL("ALL"),
+    ANG("ANG"),
+    AOA("AOA"),
+    ARS("ARS"),
+    AUD("AUD"),
+    BAM("BAM"),
+    BGN("BGN"),
+    BOB("BOB"),
+    BRL("BRL"),
+    BTC("BTC"),
+    BYR("BYR"),
+    CAD("CAD"),
+    CHF("CHF"),
+    CLP("CLP"),
+    CNY("CNY"),
+    COP("COP"),
+    CRC("CRC"),
+    CUP("CUP"),
+    CZK("CZK"),
+    DKK("DKK"),
+    EGP("EGP"),
+    GBP("GBP"),
+    GEL("GEL"),
+    GIP("GIP"),
+    HNL("HNL"),
+    HRK("HRK"),
+    HUF("HUF"),
+    IDR("IDR"),
+    ILS("ILS"),
+    INR("INR"),
+    JPY("JPY"),
+    KRW("KRW"),
+    KWD("KWD"),
+    KZT("KZT"),
+    LYD("LYD"),
+    MAD("MAD"),
+    MDL("MDL"),
+    MNT("MNT"),
+    MXN("MXN"),
+    MYR("MYR"),
+    NGN("NGN"),
+    NOK("NOK"),
+    NZD("NZD"),
+    OMR("OMR"),
+    PAB("PAB"),
+    PEN("PEN"),
+    PHP("PHP"),
+    PLN("PLN"),
+    PYG("PYG"),
+    QAR("QAR"),
+    RUB("RUB"),
+    SAR("SAR"),
+    SEK("SEK"),
+    SGD("SGD"),
+    SLL("SLL"),
+    SYP("SYP"),
+    THB("THB"),
+    TND("TND"),
+    UAH("UAH"),
+    USD("USD"),
+    VEF("VEF"),
+    VND("VND"),
+    YER("YER"),
+    ZAR("ZAR"),
+    ZMW("ZMW")
 }

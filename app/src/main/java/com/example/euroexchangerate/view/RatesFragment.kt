@@ -16,7 +16,7 @@ import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.RatesAdapter
 import com.example.euroexchangerate.adapter.SingleDayAdapter
 import com.example.euroexchangerate.data.RateDetails
-import com.example.euroexchangerate.data.SingleDay
+import com.example.euroexchangerate.data.SingleDayRates
 import com.example.euroexchangerate.viewmodel.RatesViewModel
 
 class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
@@ -104,7 +104,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
 
     }
 
-    private fun updateView(data: MutableList<SingleDay>) {
+    private fun updateView(data: MutableList<SingleDayRates>) {
         if (::adapter.isInitialized) {
             adapter.dataSetChanged(data)
         } else {

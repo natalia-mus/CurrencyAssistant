@@ -137,8 +137,8 @@ data class Rates(
     val zMW: Double
 ) {
 
-    fun getRateByCurrencyCode(currencyCode: String): Double? {
-        var result: Double? = null
+    fun getRateByCurrencyCode(currencyCode: CurrencyCode): Double {
+        val result: Double
 
         when (currencyCode) {
             CurrencyCode.AED -> result = aED
