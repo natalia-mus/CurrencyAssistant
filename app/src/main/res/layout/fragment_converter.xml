@@ -92,7 +92,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:text="EURO" />
+                    tools:text="Euro" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,7 +177,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="PLN" />
+                    tools:text="USD" />
 
                 <TextView
                     android:id="@+id/fragment_converter_result_currency_name"
@@ -191,7 +191,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_currency_code"
-                    tools:text="POLISH ZLOTY" />
+                    tools:text="US Dollar" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,7 +201,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingVertical="16dp"
-                android:src="@drawable/pln_flag_circle"
+                android:src="@drawable/usd_flag_circle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".28"
                 app:layout_constraintStart_toStartOf="parent"

@@ -8,8 +8,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
 class CurrencyConverterFragment: Fragment() {
 
@@ -19,6 +21,7 @@ class CurrencyConverterFragment: Fragment() {
     }
 
     private lateinit var fragmentView: View
+    private lateinit var viewModel: CurrencyConverterViewModel
 
     private lateinit var baseFlag: ImageView
     private lateinit var resultFlag: ImageView
@@ -37,7 +40,11 @@ class CurrencyConverterFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         fragmentView = inflater.inflate(R.layout.fragment_converter, container, false)
+        viewModel = ViewModelProvider(this).get(CurrencyConverterViewModel::class.java)
         initView()
+        setObservers()
+        convert(actualConversion.first, actualConversion.second, 1f)
+
         return fragmentView
     }
 
@@ -51,17 +58,23 @@ class CurrencyConverterFragment: Fragment() {
         baseValue = fragmentView.findViewById(R.id.fragment_converter_base_value)
         resultValue = fragmentView.findViewById(R.id.fragment_converter_result_value)
 
-        updateView(actualConversion.first, actualConversion.second)
+        baseValue.setText("1.0")
+        updateView(actualConversion.first, actualConversion.second, null)
     }
 
-    private fun updateView(base: CurrencyCode, result: CurrencyCode) {
+    private fun setObservers() {
+        viewModel.convertedValue.observe(viewLifecycleOwner) { updateView(actualConversion.first, actualConversion.second, it) }
+    }
+
+    private fun updateView(base: CurrencyCode, result: CurrencyCode, value: Float?) {
         baseCurrencyCode.text = base.name
         resultCurrencyCode.text = result.name
         baseCurrencyName.text = base.currencyName
         resultCurrencyName.text = result.currencyName
-        val value = 1f
-        baseValue.setText(value.toString())
-        resultValue.text = convert(base, result, value).toString()
+
+        if (value != null) {
+            resultValue.text = value.toString()
+        }
 
         val baseFlagImage = getFlagImageId(base)
         val resultFlagImage = getFlagImageId(result)
@@ -79,8 +92,8 @@ class CurrencyConverterFragment: Fragment() {
         return context?.resources?.getIdentifier(currencyCode.getCurrencyCodeToLowerCase() + FLAG_IMAGE_NAME, DRAWABLE, context?.packageName)
     }
 
-    private fun convert(base: CurrencyCode, result: CurrencyCode, baseValue: Float): Float {
-
+    private fun convert(base: CurrencyCode, result: CurrencyCode, baseValue: Float) {
+        viewModel.getConvertedValue(base, result, baseValue)
     }
 
 }

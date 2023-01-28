@@ -22,11 +22,11 @@ import com.example.euroexchangerate.viewmodel.RatesViewModel
 class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
 
     private lateinit var fragmentView: View
-    lateinit var viewModel: RatesViewModel
-    lateinit var recyclerView: RecyclerView
-    lateinit var adapter: SingleDayAdapter
-    lateinit var progressBar: ProgressBar
-    lateinit var layoutManager: LinearLayoutManager
+    private lateinit var viewModel: RatesViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: SingleDayAdapter
+    private lateinit var progressBar: ProgressBar
+    private lateinit var layoutManager: LinearLayoutManager
     private var _todayAlreadyFetched = false
     private var _scrollPosition = 0
 
