@@ -29,6 +29,8 @@ class CurrencyConverterFragment: Fragment() {
     private lateinit var baseValue: EditText
     private lateinit var resultValue: TextView
 
+    private var actualConversion = Pair(CurrencyCode.EUR, CurrencyCode.USD)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +51,7 @@ class CurrencyConverterFragment: Fragment() {
         baseValue = fragmentView.findViewById(R.id.fragment_converter_base_value)
         resultValue = fragmentView.findViewById(R.id.fragment_converter_result_value)
 
-        updateView(CurrencyCode.PLN, CurrencyCode.USD)
+        updateView(actualConversion.first, actualConversion.second)
     }
 
     private fun updateView(base: CurrencyCode, result: CurrencyCode) {
@@ -57,6 +59,9 @@ class CurrencyConverterFragment: Fragment() {
         resultCurrencyCode.text = result.name
         baseCurrencyName.text = base.currencyName
         resultCurrencyName.text = result.currencyName
+        val value = 1f
+        baseValue.setText(value.toString())
+        resultValue.text = convert(base, result, value).toString()
 
         val baseFlagImage = getFlagImageId(base)
         val resultFlagImage = getFlagImageId(result)
@@ -73,4 +78,9 @@ class CurrencyConverterFragment: Fragment() {
     private fun getFlagImageId(currencyCode: CurrencyCode): Int? {
         return context?.resources?.getIdentifier(currencyCode.getCurrencyCodeToLowerCase() + FLAG_IMAGE_NAME, DRAWABLE, context?.packageName)
     }
+
+    private fun convert(base: CurrencyCode, result: CurrencyCode, baseValue: Float): Float {
+
+    }
+
 }

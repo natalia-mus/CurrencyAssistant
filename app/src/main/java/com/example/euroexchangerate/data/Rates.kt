@@ -163,6 +163,7 @@ data class Rates(
             CurrencyCode.CZK -> result = cZK
             CurrencyCode.DKK -> result = dKK
             CurrencyCode.EGP -> result = eGP
+            CurrencyCode.EUR -> result = 1.0
             CurrencyCode.GBP -> result = gBP
             CurrencyCode.GEL -> result = gEL
             CurrencyCode.GIP -> result = gIP

@@ -23,6 +23,7 @@ enum class CurrencyCode(val currencyName: String) {
     CZK("Czech Koruna"),
     DKK("Danish Krone"),
     EGP("Egyptian Pound"),
+    EUR("Euro"),
     GBP("Pound Sterling"),
     GEL("Lari"),
     GIP("Gibraltar Pound"),
