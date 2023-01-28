@@ -1,6 +1,6 @@
 package com.example.euroexchangerate.data
 
-enum class CurrencyCode(code: String) {
+enum class CurrencyCode(val currencyName: String) {
     AED("AED"),
     ALL("ALL"),
     ANG("ANG"),
@@ -66,5 +66,43 @@ enum class CurrencyCode(code: String) {
     VND("VND"),
     YER("YER"),
     ZAR("ZAR"),
-    ZMW("ZMW")
+    ZMW("ZMW");
+
+    fun getCurrencyCodeToLowerCase(): String {
+        var result = ""
+
+        for (letter in name) {
+            when (letter) {
+                'A' -> result += "a"
+                'B' -> result += "b"
+                'C' -> result += "c"
+                'D' -> result += "d"
+                'E' -> result += "e"
+                'F' -> result += "f"
+                'G' -> result += "g"
+                'H' -> result += "h"
+                'I' -> result += "i"
+                'J' -> result += "j"
+                'K' -> result += "k"
+                'L' -> result += "l"
+                'M' -> result += "m"
+                'N' -> result += "n"
+                'O' -> result += "o"
+                'P' -> result += "p"
+                'Q' -> result += "q"
+                'R' -> result += "r"
+                'S' -> result += "s"
+                'T' -> result += "t"
+                'U' -> result += "u"
+                'V' -> result += "v"
+                'W' -> result += "w"
+                'X' -> result += "x"
+                'Y' -> result += "y"
+                'Z' -> result += "z"
+            }
+        }
+
+        return result
+    }
+
 }

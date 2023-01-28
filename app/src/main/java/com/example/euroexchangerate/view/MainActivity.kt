@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnItemSelectedListener() {
             when (it.itemId) {
                 R.id.rates -> changeFragment(RatesFragment())
-                //R.id.converter -> changeFragment()
+                R.id.converter -> changeFragment(CurrencyConverterFragment())
             }
 
             true

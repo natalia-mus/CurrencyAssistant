@@ -13,10 +13,10 @@
         android:translationZ="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".25"
+        app:layout_constraintHeight_percent=".15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".25" />
+        app:layout_constraintWidth_percent=".20" />
 
     <ImageView
         android:layout_width="0dp"
@@ -25,10 +25,10 @@
         android:translationZ="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".15"
+        app:layout_constraintHeight_percent=".10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".15"
+        app:layout_constraintWidth_percent=".10"
         app:tint="@color/blue_navy" />
 
     <LinearLayout
@@ -66,7 +66,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/fragment_converter_base_code"
+                    android:id="@+id/fragment_converter_base_currency_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -75,13 +75,13 @@
                     android:textColor="@color/green_light"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_name"
+                    app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_currency_name"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="EUR" />
 
                 <TextView
-                    android:id="@+id/fragment_converter_base_name"
+                    android:id="@+id/fragment_converter_base_currency_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -101,10 +101,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="60dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/aldrich"
                 android:gravity="center"
+                android:inputType="numberDecimal"
                 android:textColor="@color/green_light"
                 android:textSize="70sp"
                 android:textStyle="bold"
@@ -163,7 +165,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value">
 
                 <TextView
-                    android:id="@+id/fragment_converter_result_code"
+                    android:id="@+id/fragment_converter_result_currency_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -178,7 +180,7 @@
                     tools:text="PLN" />
 
                 <TextView
-                    android:id="@+id/fragment_converter_result_name"
+                    android:id="@+id/fragment_converter_result_currency_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -188,7 +190,7 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_code"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_currency_code"
                     tools:text="POLISH ZLOTY" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
