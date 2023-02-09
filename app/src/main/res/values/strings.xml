@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Euro Exchange Rate</string>
     <string name="converter">Converter</string>
-    <string name="error">An error occurred. Data can not be loaded.</string>
+    <string name="error_fetch_rates">An error occurred. Data can not be loaded.</string>
+    <string name="error_conversion">"An error occurred. Conversion can not succeed.</string>
     <string name="rates">Rates</string>
 
     <string name="euro_symbol">1€:</string>

@@ -125,7 +125,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
 
     private fun responseStatusAction(success: Boolean) {
         if (!success) {
-            Toast.makeText(activity, getString(R.string.error), Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, getString(R.string.error_fetch_rates), Toast.LENGTH_LONG).show()
         }
     }
 

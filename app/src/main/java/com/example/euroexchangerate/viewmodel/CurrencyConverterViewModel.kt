@@ -10,13 +10,16 @@ import com.example.euroexchangerate.util.DateUtil
 
 class CurrencyConverterViewModel : ViewModel() {
 
+    val conversionErrorOccurred = MutableLiveData<Boolean>(false)
     val convertedValue = MutableLiveData<Float>()
 
     private val today = DateUtil.getDate(0)
     private var rates: SingleDayRates? = null
 
 
-    fun getConvertedValue(baseCurrency: CurrencyCode, resultCurrency: CurrencyCode, value: Float) {
+    fun convertCurrency(baseCurrency: CurrencyCode, resultCurrency: CurrencyCode, value: Float) {
+        conversionErrorOccurred.value = false
+
         if (rates == null || (rates != null && rates!!.date != today)) {
             Repository.getDataFromAPI(today, object : RepositoryCallback<SingleDayRates> {
                 override fun onSuccess(data: SingleDayRates?) {
@@ -27,7 +30,8 @@ class CurrencyConverterViewModel : ViewModel() {
                 }
 
                 override fun onError() {
-                    // todo
+                    rates = null
+                    conversionErrorOccurred.value = true
                 }
             })
 
