@@ -34,6 +34,7 @@ class CurrencyConverterFragment: Fragment() {
     private lateinit var resultCurrencyName: TextView
     private lateinit var baseValue: EditText
     private lateinit var resultValue: TextView
+    private lateinit var swapButton: ImageView
 
     private var actualConversion = Pair(CurrencyCode.EUR, CurrencyCode.USD)
 
@@ -70,11 +71,16 @@ class CurrencyConverterFragment: Fragment() {
         resultCurrencyName = fragmentView.findViewById(R.id.fragment_converter_result_currency_name)
         baseValue = fragmentView.findViewById(R.id.fragment_converter_base_value)
         resultValue = fragmentView.findViewById(R.id.fragment_converter_result_value)
+        swapButton = fragmentView.findViewById(R.id.fragment_converter_swap)
 
         baseValue.setText("1.0")
         updateView(actualConversion.first, actualConversion.second, null)
 
         baseValue.addTextChangedListener(textChangedListener)
+
+        swapButton.setOnClickListener() {
+            swapCurrencies()
+        }
     }
 
     private fun setObservers() {
@@ -120,6 +126,32 @@ class CurrencyConverterFragment: Fragment() {
 
     private fun isValidValue(value: String): Boolean {
         return value.last().isDigit()
+    }
+
+    private fun swapCurrencies(){
+        val newBase = actualConversion.second
+        val newBaseFlag = resultFlag.drawable
+        val newBaseCurrencyCode = resultCurrencyCode.text
+        val newBaseCurrencyName = resultCurrencyName.text
+        val newBaseValue = resultValue.text
+
+        val newResult = actualConversion.first
+        val newResultFlag = baseFlag.drawable
+        val newResultCurrencyCode = baseCurrencyCode.text
+        val newResultCurrencyName = baseCurrencyName.text
+        val newResultValue = baseValue.text
+
+        actualConversion = Pair(newBase, newResult)
+
+        baseFlag.setImageDrawable(newBaseFlag)
+        baseCurrencyCode.text = newBaseCurrencyCode
+        baseCurrencyName.text = newBaseCurrencyName
+        baseValue.setText(newBaseValue)
+
+        resultFlag.setImageDrawable(newResultFlag)
+        resultCurrencyCode.text = newResultCurrencyCode
+        resultCurrencyName.text = newResultCurrencyName
+        resultValue.text = newResultValue
     }
 
 }

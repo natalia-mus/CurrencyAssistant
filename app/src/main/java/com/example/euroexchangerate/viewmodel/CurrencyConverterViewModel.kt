@@ -20,7 +20,7 @@ class CurrencyConverterViewModel : ViewModel() {
     fun convertCurrency(baseCurrency: CurrencyCode, resultCurrency: CurrencyCode, value: Float) {
         conversionErrorOccurred.value = false
 
-        if (rates == null || (rates != null && rates!!.date != today)) {
+        if (rates == null || (rates!!.date != today)) {
             Repository.getDataFromAPI(today, object : RepositoryCallback<SingleDayRates> {
                 override fun onSuccess(data: SingleDayRates?) {
                     if (data != null && data.success) {
