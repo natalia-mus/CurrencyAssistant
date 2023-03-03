@@ -18,9 +18,7 @@ class RatesAdapter(
     RecyclerView.Adapter<RatesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
-        return RatesViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.rate_list, parent, false)
-        )
+        return RatesViewHolder(LayoutInflater.from(context).inflate(R.layout.rate_list, parent, false))
     }
 
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {

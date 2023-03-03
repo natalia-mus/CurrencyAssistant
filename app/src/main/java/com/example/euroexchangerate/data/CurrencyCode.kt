@@ -1,5 +1,7 @@
 package com.example.euroexchangerate.data
 
+import android.content.Context
+
 enum class CurrencyCode(val currencyName: String) {
     AED("UAE Dirham"),
     ALL("Albanian Lek"),
@@ -69,7 +71,30 @@ enum class CurrencyCode(val currencyName: String) {
     ZAR("South African Rand"),
     ZMW("Zambian Kwacha");
 
-    fun getCurrencyCodeToLowerCase(): String {
+    companion object {
+        private const val FLAG_IMAGE_NAME = "_flag_circle"
+        private const val DRAWABLE = "drawable"
+
+
+        fun getAll(): ArrayList<CurrencyCode> {
+            val result = ArrayList<CurrencyCode>()
+
+            for (currency in values()) {
+                result.add(currency)
+            }
+
+            return result
+        }
+    }
+
+    /**
+     * Returns flag image path for this currency
+     */
+    fun getFlagImageId(context: Context): Int? {
+        return context.resources?.getIdentifier(getCurrencyCodeToLowerCase() + FLAG_IMAGE_NAME, DRAWABLE, context.packageName)
+    }
+
+    private fun getCurrencyCodeToLowerCase(): String {
         var result = ""
 
         for (letter in name) {

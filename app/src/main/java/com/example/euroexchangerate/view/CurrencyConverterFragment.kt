@@ -5,22 +5,24 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.data.CurrencyType
 import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
-class CurrencyConverterFragment: Fragment() {
+class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     companion object {
-        private const val FLAG_IMAGE_NAME = "_flag_circle"
-        private const val DRAWABLE = "drawable"
+        private const val DEFAULT_VALUE = 1.0f
     }
 
     private lateinit var fragmentView: View
@@ -34,17 +36,28 @@ class CurrencyConverterFragment: Fragment() {
     private lateinit var resultCurrencyName: TextView
     private lateinit var baseValue: EditText
     private lateinit var resultValue: TextView
+    private lateinit var baseCurrencyDetails: ConstraintLayout
+    private lateinit var resultCurrencyDetails: ConstraintLayout
     private lateinit var swapButton: ImageView
 
     private var actualConversion = Pair(CurrencyCode.EUR, CurrencyCode.USD)
+    private lateinit var currencyTypeToChange: CurrencyType
 
-    private val textChangedListener = object : TextWatcher{
+    private val onBaseCurrencyClickListener = OnClickListener {
+        currencyTypeToChange = CurrencyType.BASE
+        openCurrencyPicker()
+    }
+
+    private val onResultCurrencyClickListener = OnClickListener {
+        currencyTypeToChange = CurrencyType.RESULT
+        openCurrencyPicker()
+    }
+
+    private val textChangedListener = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {}
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            if (value != null && value.isNotEmpty() && isValidValue(value.toString())) {
-                convert(actualConversion.first, actualConversion.second, value.toString().toFloat())
-            }
+            convert()
         }
     }
 
@@ -57,7 +70,7 @@ class CurrencyConverterFragment: Fragment() {
         viewModel = ViewModelProvider(this).get(CurrencyConverterViewModel::class.java)
         initView()
         setObservers()
-        convert(actualConversion.first, actualConversion.second, 1f)
+        convert()
 
         return fragmentView
     }
@@ -71,9 +84,11 @@ class CurrencyConverterFragment: Fragment() {
         resultCurrencyName = fragmentView.findViewById(R.id.fragment_converter_result_currency_name)
         baseValue = fragmentView.findViewById(R.id.fragment_converter_base_value)
         resultValue = fragmentView.findViewById(R.id.fragment_converter_result_value)
+        baseCurrencyDetails = fragmentView.findViewById(R.id.fragment_converter_base_currency_details)
+        resultCurrencyDetails = fragmentView.findViewById(R.id.fragment_converter_result_currency_details)
         swapButton = fragmentView.findViewById(R.id.fragment_converter_swap)
 
-        baseValue.setText("1.0")
+        baseValue.setText(DEFAULT_VALUE.toString())
         updateView(actualConversion.first, actualConversion.second, null)
 
         baseValue.addTextChangedListener(textChangedListener)
@@ -81,6 +96,15 @@ class CurrencyConverterFragment: Fragment() {
         swapButton.setOnClickListener() {
             swapCurrencies()
         }
+
+        setCurrencyChangeOnClickListener()
+    }
+
+    private fun setCurrencyChangeOnClickListener() {
+        baseFlag.setOnClickListener(onBaseCurrencyClickListener)
+        baseCurrencyDetails.setOnClickListener(onBaseCurrencyClickListener)
+        resultFlag.setOnClickListener(onResultCurrencyClickListener)
+        resultCurrencyDetails.setOnClickListener(onResultCurrencyClickListener)
     }
 
     private fun setObservers() {
@@ -98,8 +122,8 @@ class CurrencyConverterFragment: Fragment() {
             resultValue.text = value.toString()
         }
 
-        val baseFlagImage = getFlagImageId(base)
-        val resultFlagImage = getFlagImageId(result)
+        val baseFlagImage = base.getFlagImageId(requireContext())
+        val resultFlagImage = result.getFlagImageId(requireContext())
 
         if (baseFlagImage != null) {
             baseFlag.setImageResource(baseFlagImage)
@@ -116,16 +140,24 @@ class CurrencyConverterFragment: Fragment() {
         }
     }
 
-    private fun getFlagImageId(currencyCode: CurrencyCode): Int? {
-        return context?.resources?.getIdentifier(currencyCode.getCurrencyCodeToLowerCase() + FLAG_IMAGE_NAME, DRAWABLE, context?.packageName)
+    private fun convert() {
+        val baseValue = baseValue.text.toString()
+
+        if (isValidValue(baseValue)) {
+            val base = actualConversion.first
+            val result = actualConversion.second
+            viewModel.convertCurrency(base, result, baseValue.toFloat())
+        }
     }
 
-    private fun convert(base: CurrencyCode, result: CurrencyCode, baseValue: Float) {
-        viewModel.convertCurrency(base, result, baseValue)
+    private fun openCurrencyPicker() {
+        val currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
+        currencyPicker.show()
+
     }
 
     private fun isValidValue(value: String): Boolean {
-        return value.last().isDigit()
+        return value.isNotEmpty() && value.last().isDigit()
     }
 
     private fun swapCurrencies(){
@@ -154,4 +186,19 @@ class CurrencyConverterFragment: Fragment() {
         resultValue.text = newResultValue
     }
 
+    override fun changeCurrency(currency: CurrencyCode) {
+        actualConversion = if (currencyTypeToChange == CurrencyType.BASE) {
+            Pair(currency, actualConversion.second)
+
+        } else {
+            Pair(actualConversion.first, currency)
+        }
+
+        convert()
+    }
+
+}
+
+interface OnCurrencyChangedAction {
+    fun changeCurrency(currency: CurrencyCode)
 }
