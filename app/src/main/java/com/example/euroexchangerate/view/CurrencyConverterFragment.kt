@@ -76,16 +76,16 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     }
 
     private fun initView() {
-        baseFlag = fragmentView.findViewById(R.id.fragment_converter_base_flag)
-        resultFlag = fragmentView.findViewById(R.id.fragment_converter_result_flag)
-        baseCurrencyCode = fragmentView.findViewById(R.id.fragment_converter_base_currency_code)
-        resultCurrencyCode = fragmentView.findViewById(R.id.fragment_converter_result_currency_code)
-        baseCurrencyName = fragmentView.findViewById(R.id.fragment_converter_base_currency_name)
-        resultCurrencyName = fragmentView.findViewById(R.id.fragment_converter_result_currency_name)
+        baseFlag = fragmentView.findViewById(R.id.currency_details_base_flag)
+        resultFlag = fragmentView.findViewById(R.id.currency_details_result_flag)
+        baseCurrencyCode = fragmentView.findViewById(R.id.currency_details_base_currency_code)
+        resultCurrencyCode = fragmentView.findViewById(R.id.currency_details_result_currency_code)
+        baseCurrencyName = fragmentView.findViewById(R.id.currency_details_base_currency_name)
+        resultCurrencyName = fragmentView.findViewById(R.id.currency_details_result_currency_name)
         baseValue = fragmentView.findViewById(R.id.fragment_converter_base_value)
         resultValue = fragmentView.findViewById(R.id.fragment_converter_result_value)
-        baseCurrencyDetails = fragmentView.findViewById(R.id.fragment_converter_base_currency_details)
-        resultCurrencyDetails = fragmentView.findViewById(R.id.fragment_converter_result_currency_details)
+        baseCurrencyDetails = fragmentView.findViewById(R.id.currency_details_base_currency_details)
+        resultCurrencyDetails = fragmentView.findViewById(R.id.currency_details_result_currency_details)
         swapButton = fragmentView.findViewById(R.id.fragment_converter_swap)
 
         baseValue.setText(DEFAULT_VALUE.toString())

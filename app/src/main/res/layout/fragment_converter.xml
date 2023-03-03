@@ -39,60 +39,11 @@
             android:id="@+id/fragment_converter_base"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:background="@color/blue_navy_light">
 
-            <ImageView
-                android:id="@+id/fragment_converter_base_flag"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:paddingVertical="16dp"
-                android:src="@drawable/eur_flag_circle"
-                app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_currency_details"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".28"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent=".28" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fragment_converter_base_currency_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_value"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <TextView
-                    android:id="@+id/fragment_converter_base_currency_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="20dp"
-                    android:fontFamily="@font/aldrich"
-                    android:textColor="@color/green_light"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_converter_base_currency_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="EUR" />
-
-                <TextView
-                    android:id="@+id/fragment_converter_base_currency_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="20dp"
-                    android:fontFamily="@font/aldrich"
-                    android:textColor="@color/green_light"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Euro" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/currency_details_base" />
 
             <EditText
                 android:id="@+id/fragment_converter_base_value"
@@ -101,17 +52,17 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="60dp"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/aldrich"
                 android:gravity="center"
                 android:inputType="numberDecimal"
+                android:maxLines="1"
                 android:textColor="@color/green_light"
-                android:textSize="56sp"
+                android:textSize="52sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/guideline_top"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="3.20" />
+                tools:text="1.0" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_top"
@@ -144,67 +95,17 @@
                 android:layout_marginBottom="60dp"
                 android:fontFamily="@font/aldrich"
                 android:gravity="center"
-                android:paddingVertical="10dp"
+                android:maxLines="1"
+                android:paddingTop="10dp"
                 android:textColor="@color/green_light"
-                android:textSize="56sp"
+                android:textSize="52sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
-                tools:text="14.30" />
+                tools:text="1.063" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fragment_converter_result_currency_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value">
-
-                <TextView
-                    android:id="@+id/fragment_converter_result_currency_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="20dp"
-                    android:fontFamily="@font/aldrich"
-                    android:textColor="@color/green_light"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="USD" />
-
-                <TextView
-                    android:id="@+id/fragment_converter_result_currency_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/aldrich"
-                    android:textAlignment="center"
-                    android:textColor="@color/green_light"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_currency_code"
-                    tools:text="US Dollar" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/fragment_converter_result_flag"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingVertical="16dp"
-                android:src="@drawable/usd_flag_circle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".28"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_converter_result_currency_details"
-                app:layout_constraintWidth_percent=".28" />
+            <include layout="@layout/currency_details_result" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
