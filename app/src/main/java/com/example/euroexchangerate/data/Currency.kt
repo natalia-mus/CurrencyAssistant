@@ -2,7 +2,7 @@ package com.example.euroexchangerate.data
 
 import android.content.Context
 
-enum class CurrencyCode(val currencyName: String) {
+enum class Currency(val currencyName: String) {
     AED("UAE Dirham"),
     ALL("Albanian Lek"),
     ANG("Netherlands Antilles Guilder"),
@@ -76,8 +76,8 @@ enum class CurrencyCode(val currencyName: String) {
         private const val DRAWABLE = "drawable"
 
 
-        fun getAll(): ArrayList<CurrencyCode> {
-            val result = ArrayList<CurrencyCode>()
+        fun getAll(): ArrayList<Currency> {
+            val result = ArrayList<Currency>()
 
             for (currency in values()) {
                 result.add(currency)

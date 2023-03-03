@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.euroexchangerate.api.Repository
 import com.example.euroexchangerate.api.RepositoryCallback
-import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.SingleDayRates
 import com.example.euroexchangerate.util.DateUtil
 
@@ -17,7 +17,7 @@ class CurrencyConverterViewModel : ViewModel() {
     private var rates: SingleDayRates? = null
 
 
-    fun convertCurrency(baseCurrency: CurrencyCode, resultCurrency: CurrencyCode, value: Float) {
+    fun convertCurrency(baseCurrency: Currency, resultCurrency: Currency, value: Float) {
         conversionErrorOccurred.value = false
 
         if (rates == null || (rates!!.date != today)) {
@@ -40,10 +40,10 @@ class CurrencyConverterViewModel : ViewModel() {
         }
     }
 
-    private fun convert(baseCurrency: CurrencyCode, resultCurrency: CurrencyCode, value: Float) {
+    private fun convert(baseCurrency: Currency, resultCurrency: Currency, value: Float) {
         if (rates != null) {
-            val base = if (baseCurrency == CurrencyCode.EUR) { 1f } else { rates!!.getRate(baseCurrency)!!.toFloat() }
-            val result = if (resultCurrency == CurrencyCode.EUR) { 1f } else { rates!!.getRate(resultCurrency)!!.toFloat() }
+            val base = if (baseCurrency == Currency.EUR) { 1f } else { rates!!.getRate(baseCurrency)!!.toFloat() }
+            val result = if (resultCurrency == Currency.EUR) { 1f } else { rates!!.getRate(resultCurrency)!!.toFloat() }
             convertedValue.value = (result / base) * value
         }
     }

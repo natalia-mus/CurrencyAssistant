@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.CurrencyItemAdapter
-import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.data.Currency
 
 class CurrencyPicker(
     context: Context,
-    private val actualConversion: Pair<CurrencyCode, CurrencyCode>,
+    private val actualConversion: Pair<Currency, Currency>,
     private val onCurrencyChangedAction: OnCurrencyChangedAction
 ) : Dialog(context) {
 
@@ -53,7 +53,7 @@ class CurrencyPicker(
     }
 
     private fun prepareData() {
-        val currenciesSet = CurrencyCode.getAll()
+        val currenciesSet = Currency.getAll()
         currenciesSet.remove(actualConversion.first)
         currenciesSet.remove(actualConversion.second)
 

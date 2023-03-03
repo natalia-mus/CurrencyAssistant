@@ -22,13 +22,13 @@ class RatesAdapter(
     }
 
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
-        val currency = currencies[position]
+        val rate = currencies[position]
 
-        holder.currencyName.text = currency.currencyCode.name
-        holder.rating.text = currency.rating.toString()
+        holder.currencyName.text = rate.currency.name
+        holder.rating.text = rate.rating.toString()
 
         holder.row.setOnClickListener() {
-            onItemClickAction.itemClicked(currency)
+            onItemClickAction.itemClicked(rate)
         }
     }
 

@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
-import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.CurrencyType
 import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
@@ -40,7 +40,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     private lateinit var resultCurrencyDetails: ConstraintLayout
     private lateinit var swapButton: ImageView
 
-    private var actualConversion = Pair(CurrencyCode.EUR, CurrencyCode.USD)
+    private var actualConversion = Pair(Currency.EUR, Currency.USD)
     private lateinit var currencyTypeToChange: CurrencyType
 
     private val onBaseCurrencyClickListener = OnClickListener {
@@ -112,7 +112,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         viewModel.conversionErrorOccurred.observe(viewLifecycleOwner) { handleError(it) }
     }
 
-    private fun updateView(base: CurrencyCode, result: CurrencyCode, value: Float?) {
+    private fun updateView(base: Currency, result: Currency, value: Float?) {
         baseCurrencyCode.text = base.name
         resultCurrencyCode.text = result.name
         baseCurrencyName.text = base.currencyName
@@ -186,7 +186,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         resultValue.text = newResultValue
     }
 
-    override fun changeCurrency(currency: CurrencyCode) {
+    override fun changeCurrency(currency: Currency) {
         actualConversion = if (currencyTypeToChange == CurrencyType.BASE) {
             Pair(currency, actualConversion.second)
 
@@ -200,5 +200,5 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 }
 
 interface OnCurrencyChangedAction {
-    fun changeCurrency(currency: CurrencyCode)
+    fun changeCurrency(currency: Currency)
 }

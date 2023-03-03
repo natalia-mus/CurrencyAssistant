@@ -15,72 +15,72 @@ data class SingleDayRates(
         if (!::currencies.isInitialized) {
 
             currencies = ArrayList()
-            val aed = RateDetails(CurrencyCode.AED, rates.getRateByCurrencyCode(CurrencyCode.AED), date)
-            val all = RateDetails(CurrencyCode.ALL, rates.getRateByCurrencyCode(CurrencyCode.ALL), date)
-            val ang = RateDetails(CurrencyCode.ANG, rates.getRateByCurrencyCode(CurrencyCode.ANG), date)
-            val aoa = RateDetails(CurrencyCode.AOA, rates.getRateByCurrencyCode(CurrencyCode.AOA), date)
-            val ars = RateDetails(CurrencyCode.ARS, rates.getRateByCurrencyCode(CurrencyCode.ARS), date)
-            val aud = RateDetails(CurrencyCode.AUD, rates.getRateByCurrencyCode(CurrencyCode.AUD), date)
-            val bam = RateDetails(CurrencyCode.BAM, rates.getRateByCurrencyCode(CurrencyCode.BAM), date)
-            val bgn = RateDetails(CurrencyCode.BGN, rates.getRateByCurrencyCode(CurrencyCode.BGN), date)
-            val bob = RateDetails(CurrencyCode.BOB, rates.getRateByCurrencyCode(CurrencyCode.BOB), date)
-            val brl = RateDetails(CurrencyCode.BRL, rates.getRateByCurrencyCode(CurrencyCode.BRL), date)
-            val btc = RateDetails(CurrencyCode.BTC, rates.getRateByCurrencyCode(CurrencyCode.BTC), date)
-            val byr = RateDetails(CurrencyCode.BYR, rates.getRateByCurrencyCode(CurrencyCode.BYR), date)
-            val cad = RateDetails(CurrencyCode.CAD, rates.getRateByCurrencyCode(CurrencyCode.CAD), date)
-            val chf = RateDetails(CurrencyCode.CHF, rates.getRateByCurrencyCode(CurrencyCode.CHF), date)
-            val clp = RateDetails(CurrencyCode.CLP, rates.getRateByCurrencyCode(CurrencyCode.CLP), date)
-            val cny = RateDetails(CurrencyCode.CNY, rates.getRateByCurrencyCode(CurrencyCode.CNY), date)
-            val cop = RateDetails(CurrencyCode.COP, rates.getRateByCurrencyCode(CurrencyCode.COP), date)
-            val crc = RateDetails(CurrencyCode.CRC, rates.getRateByCurrencyCode(CurrencyCode.CRC), date)
-            val cup = RateDetails(CurrencyCode.CUP, rates.getRateByCurrencyCode(CurrencyCode.CUP), date)
-            val czk = RateDetails(CurrencyCode.CZK, rates.getRateByCurrencyCode(CurrencyCode.CZK), date)
-            val dkk = RateDetails(CurrencyCode.DKK, rates.getRateByCurrencyCode(CurrencyCode.DKK), date)
-            val egp = RateDetails(CurrencyCode.EGP, rates.getRateByCurrencyCode(CurrencyCode.EGP), date)
-            val gbp = RateDetails(CurrencyCode.GBP, rates.getRateByCurrencyCode(CurrencyCode.GBP), date)
-            val gel = RateDetails(CurrencyCode.GEL, rates.getRateByCurrencyCode(CurrencyCode.GEL), date)
-            val gip = RateDetails(CurrencyCode.GIP, rates.getRateByCurrencyCode(CurrencyCode.GIP), date)
-            val hnl = RateDetails(CurrencyCode.HNL, rates.getRateByCurrencyCode(CurrencyCode.HNL), date)
-            val hrk = RateDetails(CurrencyCode.HRK, rates.getRateByCurrencyCode(CurrencyCode.HRK), date)
-            val huf = RateDetails(CurrencyCode.HUF, rates.getRateByCurrencyCode(CurrencyCode.HUF), date)
-            val idr = RateDetails(CurrencyCode.IDR, rates.getRateByCurrencyCode(CurrencyCode.IDR), date)
-            val ils = RateDetails(CurrencyCode.ILS, rates.getRateByCurrencyCode(CurrencyCode.ILS), date)
-            val inr = RateDetails(CurrencyCode.INR, rates.getRateByCurrencyCode(CurrencyCode.INR), date)
-            val jpy = RateDetails(CurrencyCode.JPY, rates.getRateByCurrencyCode(CurrencyCode.JPY), date)
-            val krw = RateDetails(CurrencyCode.KRW, rates.getRateByCurrencyCode(CurrencyCode.KRW), date)
-            val kwd = RateDetails(CurrencyCode.KWD, rates.getRateByCurrencyCode(CurrencyCode.KWD), date)
-            val kzt = RateDetails(CurrencyCode.KZT, rates.getRateByCurrencyCode(CurrencyCode.KZT), date)
-            val lyd = RateDetails(CurrencyCode.LYD, rates.getRateByCurrencyCode(CurrencyCode.LYD), date)
-            val mad = RateDetails(CurrencyCode.MAD, rates.getRateByCurrencyCode(CurrencyCode.MAD), date)
-            val mdl = RateDetails(CurrencyCode.MDL, rates.getRateByCurrencyCode(CurrencyCode.MDL), date)
-            val mnt = RateDetails(CurrencyCode.MNT, rates.getRateByCurrencyCode(CurrencyCode.MNT), date)
-            val mxn = RateDetails(CurrencyCode.MXN, rates.getRateByCurrencyCode(CurrencyCode.MXN), date)
-            val myr = RateDetails(CurrencyCode.MYR, rates.getRateByCurrencyCode(CurrencyCode.MYR), date)
-            val ngn = RateDetails(CurrencyCode.NGN, rates.getRateByCurrencyCode(CurrencyCode.NGN), date)
-            val nok = RateDetails(CurrencyCode.NOK, rates.getRateByCurrencyCode(CurrencyCode.NOK), date)
-            val nzd = RateDetails(CurrencyCode.NZD, rates.getRateByCurrencyCode(CurrencyCode.NZD), date)
-            val omr = RateDetails(CurrencyCode.OMR, rates.getRateByCurrencyCode(CurrencyCode.OMR), date)
-            val pab = RateDetails(CurrencyCode.PAB, rates.getRateByCurrencyCode(CurrencyCode.PAB), date)
-            val pen = RateDetails(CurrencyCode.PEN, rates.getRateByCurrencyCode(CurrencyCode.PEN), date)
-            val php = RateDetails(CurrencyCode.PHP, rates.getRateByCurrencyCode(CurrencyCode.PHP), date)
-            val pln = RateDetails(CurrencyCode.PLN, rates.getRateByCurrencyCode(CurrencyCode.PLN), date)
-            val pyg = RateDetails(CurrencyCode.PYG, rates.getRateByCurrencyCode(CurrencyCode.PYG), date)
-            val qar = RateDetails(CurrencyCode.QAR, rates.getRateByCurrencyCode(CurrencyCode.QAR), date)
-            val rub = RateDetails(CurrencyCode.RUB, rates.getRateByCurrencyCode(CurrencyCode.RUB), date)
-            val sar = RateDetails(CurrencyCode.SAR, rates.getRateByCurrencyCode(CurrencyCode.SAR), date)
-            val sek = RateDetails(CurrencyCode.SEK, rates.getRateByCurrencyCode(CurrencyCode.SEK), date)
-            val sgd = RateDetails(CurrencyCode.SGD, rates.getRateByCurrencyCode(CurrencyCode.SGD), date)
-            val sll = RateDetails(CurrencyCode.SLL, rates.getRateByCurrencyCode(CurrencyCode.SLL), date)
-            val syp = RateDetails(CurrencyCode.SYP, rates.getRateByCurrencyCode(CurrencyCode.SYP), date)
-            val thb = RateDetails(CurrencyCode.THB, rates.getRateByCurrencyCode(CurrencyCode.THB), date)
-            val tnd = RateDetails(CurrencyCode.TND, rates.getRateByCurrencyCode(CurrencyCode.TND), date)
-            val uah = RateDetails(CurrencyCode.UAH, rates.getRateByCurrencyCode(CurrencyCode.UAH), date)
-            val usd = RateDetails(CurrencyCode.USD, rates.getRateByCurrencyCode(CurrencyCode.USD), date)
-            val vef = RateDetails(CurrencyCode.VEF, rates.getRateByCurrencyCode(CurrencyCode.VEF), date)
-            val vnd = RateDetails(CurrencyCode.VND, rates.getRateByCurrencyCode(CurrencyCode.VND), date)
-            val yer = RateDetails(CurrencyCode.YER, rates.getRateByCurrencyCode(CurrencyCode.YER), date)
-            val zar = RateDetails(CurrencyCode.ZAR, rates.getRateByCurrencyCode(CurrencyCode.ZAR), date)
-            val zmw = RateDetails(CurrencyCode.ZMW, rates.getRateByCurrencyCode(CurrencyCode.ZMW), date)
+            val aed = RateDetails(Currency.AED, rates.getRateByCurrencyCode(Currency.AED), date)
+            val all = RateDetails(Currency.ALL, rates.getRateByCurrencyCode(Currency.ALL), date)
+            val ang = RateDetails(Currency.ANG, rates.getRateByCurrencyCode(Currency.ANG), date)
+            val aoa = RateDetails(Currency.AOA, rates.getRateByCurrencyCode(Currency.AOA), date)
+            val ars = RateDetails(Currency.ARS, rates.getRateByCurrencyCode(Currency.ARS), date)
+            val aud = RateDetails(Currency.AUD, rates.getRateByCurrencyCode(Currency.AUD), date)
+            val bam = RateDetails(Currency.BAM, rates.getRateByCurrencyCode(Currency.BAM), date)
+            val bgn = RateDetails(Currency.BGN, rates.getRateByCurrencyCode(Currency.BGN), date)
+            val bob = RateDetails(Currency.BOB, rates.getRateByCurrencyCode(Currency.BOB), date)
+            val brl = RateDetails(Currency.BRL, rates.getRateByCurrencyCode(Currency.BRL), date)
+            val btc = RateDetails(Currency.BTC, rates.getRateByCurrencyCode(Currency.BTC), date)
+            val byr = RateDetails(Currency.BYR, rates.getRateByCurrencyCode(Currency.BYR), date)
+            val cad = RateDetails(Currency.CAD, rates.getRateByCurrencyCode(Currency.CAD), date)
+            val chf = RateDetails(Currency.CHF, rates.getRateByCurrencyCode(Currency.CHF), date)
+            val clp = RateDetails(Currency.CLP, rates.getRateByCurrencyCode(Currency.CLP), date)
+            val cny = RateDetails(Currency.CNY, rates.getRateByCurrencyCode(Currency.CNY), date)
+            val cop = RateDetails(Currency.COP, rates.getRateByCurrencyCode(Currency.COP), date)
+            val crc = RateDetails(Currency.CRC, rates.getRateByCurrencyCode(Currency.CRC), date)
+            val cup = RateDetails(Currency.CUP, rates.getRateByCurrencyCode(Currency.CUP), date)
+            val czk = RateDetails(Currency.CZK, rates.getRateByCurrencyCode(Currency.CZK), date)
+            val dkk = RateDetails(Currency.DKK, rates.getRateByCurrencyCode(Currency.DKK), date)
+            val egp = RateDetails(Currency.EGP, rates.getRateByCurrencyCode(Currency.EGP), date)
+            val gbp = RateDetails(Currency.GBP, rates.getRateByCurrencyCode(Currency.GBP), date)
+            val gel = RateDetails(Currency.GEL, rates.getRateByCurrencyCode(Currency.GEL), date)
+            val gip = RateDetails(Currency.GIP, rates.getRateByCurrencyCode(Currency.GIP), date)
+            val hnl = RateDetails(Currency.HNL, rates.getRateByCurrencyCode(Currency.HNL), date)
+            val hrk = RateDetails(Currency.HRK, rates.getRateByCurrencyCode(Currency.HRK), date)
+            val huf = RateDetails(Currency.HUF, rates.getRateByCurrencyCode(Currency.HUF), date)
+            val idr = RateDetails(Currency.IDR, rates.getRateByCurrencyCode(Currency.IDR), date)
+            val ils = RateDetails(Currency.ILS, rates.getRateByCurrencyCode(Currency.ILS), date)
+            val inr = RateDetails(Currency.INR, rates.getRateByCurrencyCode(Currency.INR), date)
+            val jpy = RateDetails(Currency.JPY, rates.getRateByCurrencyCode(Currency.JPY), date)
+            val krw = RateDetails(Currency.KRW, rates.getRateByCurrencyCode(Currency.KRW), date)
+            val kwd = RateDetails(Currency.KWD, rates.getRateByCurrencyCode(Currency.KWD), date)
+            val kzt = RateDetails(Currency.KZT, rates.getRateByCurrencyCode(Currency.KZT), date)
+            val lyd = RateDetails(Currency.LYD, rates.getRateByCurrencyCode(Currency.LYD), date)
+            val mad = RateDetails(Currency.MAD, rates.getRateByCurrencyCode(Currency.MAD), date)
+            val mdl = RateDetails(Currency.MDL, rates.getRateByCurrencyCode(Currency.MDL), date)
+            val mnt = RateDetails(Currency.MNT, rates.getRateByCurrencyCode(Currency.MNT), date)
+            val mxn = RateDetails(Currency.MXN, rates.getRateByCurrencyCode(Currency.MXN), date)
+            val myr = RateDetails(Currency.MYR, rates.getRateByCurrencyCode(Currency.MYR), date)
+            val ngn = RateDetails(Currency.NGN, rates.getRateByCurrencyCode(Currency.NGN), date)
+            val nok = RateDetails(Currency.NOK, rates.getRateByCurrencyCode(Currency.NOK), date)
+            val nzd = RateDetails(Currency.NZD, rates.getRateByCurrencyCode(Currency.NZD), date)
+            val omr = RateDetails(Currency.OMR, rates.getRateByCurrencyCode(Currency.OMR), date)
+            val pab = RateDetails(Currency.PAB, rates.getRateByCurrencyCode(Currency.PAB), date)
+            val pen = RateDetails(Currency.PEN, rates.getRateByCurrencyCode(Currency.PEN), date)
+            val php = RateDetails(Currency.PHP, rates.getRateByCurrencyCode(Currency.PHP), date)
+            val pln = RateDetails(Currency.PLN, rates.getRateByCurrencyCode(Currency.PLN), date)
+            val pyg = RateDetails(Currency.PYG, rates.getRateByCurrencyCode(Currency.PYG), date)
+            val qar = RateDetails(Currency.QAR, rates.getRateByCurrencyCode(Currency.QAR), date)
+            val rub = RateDetails(Currency.RUB, rates.getRateByCurrencyCode(Currency.RUB), date)
+            val sar = RateDetails(Currency.SAR, rates.getRateByCurrencyCode(Currency.SAR), date)
+            val sek = RateDetails(Currency.SEK, rates.getRateByCurrencyCode(Currency.SEK), date)
+            val sgd = RateDetails(Currency.SGD, rates.getRateByCurrencyCode(Currency.SGD), date)
+            val sll = RateDetails(Currency.SLL, rates.getRateByCurrencyCode(Currency.SLL), date)
+            val syp = RateDetails(Currency.SYP, rates.getRateByCurrencyCode(Currency.SYP), date)
+            val thb = RateDetails(Currency.THB, rates.getRateByCurrencyCode(Currency.THB), date)
+            val tnd = RateDetails(Currency.TND, rates.getRateByCurrencyCode(Currency.TND), date)
+            val uah = RateDetails(Currency.UAH, rates.getRateByCurrencyCode(Currency.UAH), date)
+            val usd = RateDetails(Currency.USD, rates.getRateByCurrencyCode(Currency.USD), date)
+            val vef = RateDetails(Currency.VEF, rates.getRateByCurrencyCode(Currency.VEF), date)
+            val vnd = RateDetails(Currency.VND, rates.getRateByCurrencyCode(Currency.VND), date)
+            val yer = RateDetails(Currency.YER, rates.getRateByCurrencyCode(Currency.YER), date)
+            val zar = RateDetails(Currency.ZAR, rates.getRateByCurrencyCode(Currency.ZAR), date)
+            val zmw = RateDetails(Currency.ZMW, rates.getRateByCurrencyCode(Currency.ZMW), date)
 
             currencies.add(aed)
             currencies.add(all)
@@ -157,10 +157,10 @@ data class SingleDayRates(
         getCurrenciesList()[index]
     }
 
-    fun getImage(currencyCode: CurrencyCode): String? {
+    fun getImage(currency: Currency): String? {
         var result: String? = null
 
-        val currencyItem = getCurrencyItemByCode(currencyCode)
+        val currencyItem = getCurrencyItemByCode(currency)
         if (currencyItem != null) {
             result = currencyItem.getImagePath()
         }
@@ -168,10 +168,10 @@ data class SingleDayRates(
         return result
     }
 
-    fun getRate(currencyCode: CurrencyCode): Double? {
+    fun getRate(currency: Currency): Double? {
         var result: Double? = null
 
-        val currencyItem = getCurrencyItemByCode(currencyCode)
+        val currencyItem = getCurrencyItemByCode(currency)
         if (currencyItem != null) {
             result = currencyItem.rating
         }
@@ -181,13 +181,13 @@ data class SingleDayRates(
 
     fun getSize(): Int = getCurrenciesList().size
 
-    private fun getCurrencyItemByCode(currencyCode: CurrencyCode): RateDetails? {
+    private fun getCurrencyItemByCode(currency: Currency): RateDetails? {
         var result: RateDetails? = null
         val currenciesList = getCurrenciesList()
 
-        for (currency in currenciesList) {
-            if (currency.currencyCode == currencyCode) {
-                result = currency
+        for (item in currenciesList) {
+            if (item.currency == currency) {
+                result = item
                 break
             }
         }

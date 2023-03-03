@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
-import com.example.euroexchangerate.data.CurrencyCode
+import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.view.CurrencyPicker
 import com.example.euroexchangerate.view.OnCurrencyChangedAction
 
 class CurrencyItemAdapter(
-    private val currenciesSet: ArrayList<CurrencyCode>,
+    private val currenciesSet: ArrayList<Currency>,
     private val context: Context,
     private val parent: CurrencyPicker,
     private val onCurrencyChangedAction: OnCurrencyChangedAction
