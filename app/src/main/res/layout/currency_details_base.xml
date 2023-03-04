@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:background="@color/blue_navy_light"
-    app:layout_constraintBottom_toTopOf="@+id/fragment_converter_base_value"
+    app:layout_constraintBottom_toTopOf="@+id/currency_base_value"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
 

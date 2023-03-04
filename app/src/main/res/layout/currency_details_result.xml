@@ -8,7 +8,7 @@
     android:background="@color/blue_navy"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/fragment_converter_result_value">
+    app:layout_constraintTop_toBottomOf="@+id/currency_result_value">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/currency_details_result_currency_details"

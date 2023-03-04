@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_navy">
@@ -43,26 +42,7 @@
             android:layout_weight="1"
             android:background="@color/blue_navy_light">
 
-            <include layout="@layout/currency_details_base" />
-
-            <EditText
-                android:id="@+id/fragment_converter_base_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/aldrich"
-                android:gravity="center"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                android:textColor="@color/green_light"
-                android:textSize="52sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/guideline_top"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="1.0" />
+            <include layout="@layout/currency_base" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_top"
@@ -86,26 +66,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.15" />
 
-            <TextView
-                android:id="@+id/fragment_converter_result_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="60dp"
-                android:fontFamily="@font/aldrich"
-                android:gravity="center"
-                android:maxLines="1"
-                android:paddingTop="10dp"
-                android:textColor="@color/green_light"
-                android:textSize="52sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
-                tools:text="1.063" />
-
-            <include layout="@layout/currency_details_result" />
+            <include layout="@layout/currency_result" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
