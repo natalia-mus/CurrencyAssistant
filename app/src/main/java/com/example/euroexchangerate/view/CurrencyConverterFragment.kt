@@ -2,7 +2,9 @@ package com.example.euroexchangerate.view
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -23,11 +25,14 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     companion object {
         private const val DEFAULT_VALUE = 1.0f
+        private const val CHARACTERS_LIMIT = 8
     }
 
     private lateinit var fragmentView: View
     private lateinit var viewModel: CurrencyConverterViewModel
 
+    private lateinit var baseCurrency: ConstraintLayout
+    private lateinit var resultCurrency: ConstraintLayout
     private lateinit var baseFlag: ImageView
     private lateinit var resultFlag: ImageView
     private lateinit var baseCurrencyCode: TextView
@@ -57,6 +62,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         override fun afterTextChanged(p0: Editable?) {}
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            refreshLengthFilter(value)
             convert()
         }
     }
@@ -76,6 +82,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     }
 
     private fun initView() {
+        baseCurrency = fragmentView.findViewById(R.id.currency_base)
+        resultCurrency = fragmentView.findViewById(R.id.currency_result)
         baseFlag = fragmentView.findViewById(R.id.currency_base_flag)
         resultFlag = fragmentView.findViewById(R.id.currency_result_flag)
         baseCurrencyCode = fragmentView.findViewById(R.id.currency_base_currency_code)
@@ -88,6 +96,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         resultCurrencyDetails = fragmentView.findViewById(R.id.currency_result_currency_details)
         swapButton = fragmentView.findViewById(R.id.fragment_converter_swap)
 
+        adjustFlagsDimensions()
+
         baseValue.setText(DEFAULT_VALUE.toString())
         updateView(actualConversion.first, actualConversion.second, null)
 
@@ -97,19 +107,51 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
             swapCurrencies()
         }
 
-        setCurrencyChangeOnClickListener()
+        baseCurrency.setOnClickListener(onBaseCurrencyClickListener)
+        resultCurrency.setOnClickListener(onResultCurrencyClickListener)
     }
 
-    private fun setCurrencyChangeOnClickListener() {
-        baseFlag.setOnClickListener(onBaseCurrencyClickListener)
-        baseCurrencyDetails.setOnClickListener(onBaseCurrencyClickListener)
-        resultFlag.setOnClickListener(onResultCurrencyClickListener)
-        resultCurrencyDetails.setOnClickListener(onResultCurrencyClickListener)
+    private fun adjustFlagsDimensions() {
+        val totalHeight = resources.displayMetrics.heightPixels
+        val centerHeight = totalHeight * 0.15
+        val flagDimension = (centerHeight / 2).toInt()
+
+        baseFlag.layoutParams.width = flagDimension
+        baseFlag.layoutParams.height = flagDimension
+
+        resultFlag.layoutParams.width = flagDimension
+        resultFlag.layoutParams.height = flagDimension
     }
 
     private fun setObservers() {
         viewModel.convertedValue.observe(viewLifecycleOwner) { updateView(actualConversion.first, actualConversion.second, it) }
         viewModel.conversionErrorOccurred.observe(viewLifecycleOwner) { handleError(it) }
+    }
+
+    /**
+     * Refreshes length filter for baseValue
+     * Comma in value is not consider a character so if value has one, there is need to increase the limit
+     */
+    private fun refreshLengthFilter(value: CharSequence?) {
+        var limit = CHARACTERS_LIMIT
+
+        if (value != null && value.contains(".")) {
+            limit = CHARACTERS_LIMIT + 1
+        }
+
+        val filter = InputFilter.LengthFilter(limit)
+        baseValue.filters = arrayOf(filter)
+    }
+
+    private fun adjustResultTextSize(value: Float) {
+        val length = value.toString().length - 1        // comma is not considered a character
+        var size = resources.getDimension(R.dimen.converter_value_text_size)
+
+        if (length > CHARACTERS_LIMIT) {
+            size = resources.getDimension(R.dimen.converter_value_text_size_small)
+        }
+
+        resultValue.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
     private fun updateView(base: Currency, result: Currency, value: Float?) {
@@ -119,6 +161,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         resultCurrencyName.text = result.currencyName
 
         if (value != null) {
+            adjustResultTextSize(value)
             resultValue.text = value.toString()
         }
 

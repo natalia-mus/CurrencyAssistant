@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/currency_result_value"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/converter_value_size"
         android:layout_gravity="center"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="60dp"
@@ -20,7 +20,7 @@
         android:maxLines="1"
         android:paddingTop="10dp"
         android:textColor="@color/green_light"
-        android:textSize="52sp"
+        android:textSize="@dimen/converter_value_text_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +28,12 @@
         tools:text="1.063" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/currency_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:background="@color/blue_navy"
+        android:background="@drawable/clickable_blue_navy"
+        android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currency_result_value">
@@ -67,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/aldrich"
+                android:paddingBottom="16dp"
                 android:textAlignment="center"
                 android:textColor="@color/green_light"
                 android:textSize="16sp"
@@ -82,7 +85,6 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:paddingVertical="16dp"
             android:src="@drawable/usd_flag_circle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
