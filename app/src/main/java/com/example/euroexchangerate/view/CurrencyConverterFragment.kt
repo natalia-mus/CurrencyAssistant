@@ -45,7 +45,6 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     private lateinit var resultCurrencyDetails: ConstraintLayout
     private lateinit var swapButton: ImageView
 
-    private var actualConversion = Pair(Currency.EUR, Currency.USD)
     private lateinit var currencyTypeToChange: CurrencyType
 
     private val onBaseCurrencyClickListener = OnClickListener {
@@ -63,7 +62,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
             refreshLengthFilter(value)
-            convert()
+            updateActualConversion()
         }
     }
 
@@ -76,7 +75,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         viewModel = ViewModelProvider(this).get(CurrencyConverterViewModel::class.java)
         initView()
         setObservers()
-        convert()
+        updateActualConversion()
 
         return fragmentView
     }
@@ -99,7 +98,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         adjustFlagsDimensions()
 
         baseValue.setText(DEFAULT_VALUE.toString())
-        updateView(actualConversion.first, actualConversion.second, null)
+        updateView(null)
 
         baseValue.addTextChangedListener(textChangedListener)
 
@@ -124,13 +123,13 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     }
 
     private fun setObservers() {
-        viewModel.convertedValue.observe(viewLifecycleOwner) { updateView(actualConversion.first, actualConversion.second, it) }
+        viewModel.convertedValue.observe(viewLifecycleOwner) { updateView(it) }
         viewModel.conversionErrorOccurred.observe(viewLifecycleOwner) { handleError(it) }
     }
 
     /**
      * Refreshes length filter for baseValue
-     * Comma in value is not consider a character so if value has one, there is need to increase the limit
+     * Comma in value is not considered a character so if value has one, there is need to increase the limit
      */
     private fun refreshLengthFilter(value: CharSequence?) {
         var limit = CHARACTERS_LIMIT
@@ -154,26 +153,31 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         resultValue.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
-    private fun updateView(base: Currency, result: Currency, value: Float?) {
-        baseCurrencyCode.text = base.name
-        resultCurrencyCode.text = result.name
-        baseCurrencyName.text = base.currencyName
-        resultCurrencyName.text = result.currencyName
+    private fun updateView(value: Float?) {
+        val base = viewModel.getActualBase()
+        val result = viewModel.getActualResult()
 
-        if (value != null) {
-            adjustResultTextSize(value)
-            resultValue.text = value.toString()
-        }
+        if (base != null && result != null) {
+            baseCurrencyCode.text = base.name
+            resultCurrencyCode.text = result.name
+            baseCurrencyName.text = base.currencyName
+            resultCurrencyName.text = result.currencyName
 
-        val baseFlagImage = base.getFlagImageId(requireContext())
-        val resultFlagImage = result.getFlagImageId(requireContext())
+            if (value != null) {
+                adjustResultTextSize(value)
+                resultValue.text = value.toString()
+            }
 
-        if (baseFlagImage != null) {
-            baseFlag.setImageResource(baseFlagImage)
-        }
+            val baseFlagImage = base.getFlagImageId(requireContext())
+            val resultFlagImage = result.getFlagImageId(requireContext())
 
-        if (resultFlagImage != null) {
-            resultFlag.setImageResource(resultFlagImage)
+            if (baseFlagImage != null) {
+                baseFlag.setImageResource(baseFlagImage)
+            }
+
+            if (resultFlagImage != null) {
+                resultFlag.setImageResource(resultFlagImage)
+            }
         }
     }
 
@@ -183,20 +187,33 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         }
     }
 
-    private fun convert() {
-        val baseValue = baseValue.text.toString()
+    /**
+     * Converts currency value without changing base and result currencies
+     */
+    private fun updateActualConversion() {
+        updateActualConversion(null, null)
+    }
 
-        if (isValidValue(baseValue)) {
-            val base = actualConversion.first
-            val result = actualConversion.second
-            viewModel.convertCurrency(base, result, baseValue.toFloat())
+    /**
+     * Changes base and result currencies and then converts currency value
+     */
+    private fun updateActualConversion(base: Currency?, result: Currency?) {
+        val value = baseValue.text.toString()
+
+        if (isValidValue(value)) {
+            viewModel.updateActualConversion(base, result, value.toFloat())
+        } else if (value.isEmpty()) {
+            viewModel.updateActualConversion(base, result, null)
         }
     }
 
     private fun openCurrencyPicker() {
-        val currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
-        currencyPicker.show()
+        val actualConversion = viewModel.getActualConversion()
 
+        if (actualConversion != null) {
+            val currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
+            currencyPicker.show()
+        }
     }
 
     private fun isValidValue(value: String): Boolean {
@@ -204,40 +221,41 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     }
 
     private fun swapCurrencies(){
-        val newBase = actualConversion.second
+        val newBase = viewModel.getActualResult()
         val newBaseFlag = resultFlag.drawable
         val newBaseCurrencyCode = resultCurrencyCode.text
         val newBaseCurrencyName = resultCurrencyName.text
-        val newBaseValue = resultValue.text
 
-        val newResult = actualConversion.first
+        val newResult = viewModel.getActualBase()
         val newResultFlag = baseFlag.drawable
         val newResultCurrencyCode = baseCurrencyCode.text
         val newResultCurrencyName = baseCurrencyName.text
-        val newResultValue = baseValue.text
-
-        actualConversion = Pair(newBase, newResult)
 
         baseFlag.setImageDrawable(newBaseFlag)
         baseCurrencyCode.text = newBaseCurrencyCode
         baseCurrencyName.text = newBaseCurrencyName
-        baseValue.setText(newBaseValue)
 
         resultFlag.setImageDrawable(newResultFlag)
         resultCurrencyCode.text = newResultCurrencyCode
         resultCurrencyName.text = newResultCurrencyName
-        resultValue.text = newResultValue
+
+        updateActualConversion(newBase, newResult)
     }
 
     override fun changeCurrency(currency: Currency) {
-        actualConversion = if (currencyTypeToChange == CurrencyType.BASE) {
-            Pair(currency, actualConversion.second)
+        val base: Currency?
+        val result: Currency?
+
+        if (currencyTypeToChange == CurrencyType.BASE) {
+            base = currency
+            result = viewModel.getActualResult()
 
         } else {
-            Pair(actualConversion.first, currency)
+            base = viewModel.getActualBase()
+            result = currency
         }
 
-        convert()
+        updateActualConversion(base, result)
     }
 
 }

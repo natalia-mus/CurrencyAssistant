@@ -13,11 +13,37 @@ class CurrencyConverterViewModel : ViewModel() {
     val conversionErrorOccurred = MutableLiveData<Boolean>(false)
     val convertedValue = MutableLiveData<Float>()
 
-    private val today = DateUtil.getDate(0)
     private var rates: SingleDayRates? = null
 
+    private val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
+    private val today = DateUtil.getDate(0)
 
-    fun convertCurrency(baseCurrency: Currency, resultCurrency: Currency, value: Float) {
+
+    fun getActualBase(): Currency? {
+        return actualConversion.value?.first
+    }
+
+    fun getActualResult(): Currency? {
+        return actualConversion.value?.second
+    }
+
+    fun getActualConversion(): Pair<Currency, Currency>? {
+        return actualConversion.value
+    }
+
+    fun updateActualConversion(base: Currency?, result: Currency?, value: Float?) {
+        if (base != null && result != null) {
+            actualConversion.value = Pair(base, result)
+        }
+
+        if (value != null) {
+            convertCurrency(value.toFloat())
+        } else {
+            convertedValue.value = 0f
+        }
+    }
+
+    private fun convertCurrency(value: Float) {
         conversionErrorOccurred.value = false
 
         if (rates == null || (rates!!.date != today)) {
@@ -25,7 +51,7 @@ class CurrencyConverterViewModel : ViewModel() {
                 override fun onSuccess(data: SingleDayRates?) {
                     if (data != null && data.success) {
                         rates = data
-                        convert(baseCurrency, resultCurrency, value)
+                        convert(value)
                     }
                 }
 
@@ -36,15 +62,20 @@ class CurrencyConverterViewModel : ViewModel() {
             })
 
         } else {
-            convert(baseCurrency, resultCurrency, value)
+            convert(value)
         }
     }
 
-    private fun convert(baseCurrency: Currency, resultCurrency: Currency, value: Float) {
+    private fun convert(value: Float) {
         if (rates != null) {
-            val base = if (baseCurrency == Currency.EUR) { 1f } else { rates!!.getRate(baseCurrency)!!.toFloat() }
-            val result = if (resultCurrency == Currency.EUR) { 1f } else { rates!!.getRate(resultCurrency)!!.toFloat() }
-            convertedValue.value = (result / base) * value
+            val baseCurrency = actualConversion.value?.first
+            val resultCurrency = actualConversion.value?.second
+
+            if (baseCurrency != null && resultCurrency != null) {
+                val base = if (baseCurrency == Currency.EUR) { 1f } else { rates!!.getRate(baseCurrency)!!.toFloat() }
+                val result = if (resultCurrency == Currency.EUR) { 1f } else { rates!!.getRate(resultCurrency)!!.toFloat() }
+                convertedValue.value = (result / base) * value
+            }
         }
     }
 }

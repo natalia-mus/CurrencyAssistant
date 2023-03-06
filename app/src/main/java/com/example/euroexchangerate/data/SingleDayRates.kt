@@ -157,17 +157,6 @@ data class SingleDayRates(
         getCurrenciesList()[index]
     }
 
-    fun getImage(currency: Currency): String? {
-        var result: String? = null
-
-        val currencyItem = getCurrencyItemByCode(currency)
-        if (currencyItem != null) {
-            result = currencyItem.getImagePath()
-        }
-
-        return result
-    }
-
     fun getRate(currency: Currency): Double? {
         var result: Double? = null
 
