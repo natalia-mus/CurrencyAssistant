@@ -124,7 +124,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
     }
 
     private fun setObservers() {
-        viewModel.getActualConversionInstance().observe(viewLifecycleOwner) { updateView(null) }
+        viewModel.actualConversion.observe(viewLifecycleOwner) { updateView(null) }
         viewModel.convertedValue.observe(viewLifecycleOwner) { updateView(it) }
         viewModel.conversionErrorOccurred.observe(viewLifecycleOwner) { handleError(it) }
     }

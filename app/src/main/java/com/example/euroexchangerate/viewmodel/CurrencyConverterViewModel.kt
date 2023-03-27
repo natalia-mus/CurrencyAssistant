@@ -12,12 +12,12 @@ import kotlin.math.roundToLong
 
 class CurrencyConverterViewModel : ViewModel() {
 
+    val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
     val conversionErrorOccurred = MutableLiveData<Boolean>(false)
     val convertedValue = MutableLiveData<Double>()
 
     private var rates: SingleDayRates? = null
 
-    private val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
     private val today = DateUtil.getDate(0)
 
 
@@ -32,8 +32,6 @@ class CurrencyConverterViewModel : ViewModel() {
     fun getActualConversion(): Pair<Currency, Currency>? {
         return actualConversion.value
     }
-
-    fun getActualConversionInstance() = actualConversion
 
     fun updateActualConversion(base: Currency?, result: Currency?, value: Double?) {
         if (base != null && result != null) {
