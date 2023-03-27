@@ -2,7 +2,6 @@ package com.example.euroexchangerate.data
 
 data class SingleDayRates(
     val success: Boolean,
-    val timestamp: Int,
     val base: String,
     val date: String,
     private val rates: Rates

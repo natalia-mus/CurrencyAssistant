@@ -24,8 +24,9 @@ import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     companion object {
-        private const val DEFAULT_VALUE = 1.0f
-        private const val CHARACTERS_LIMIT = 8
+        private const val DEFAULT_VALUE = 1
+        private const val CHARACTERS_FIRST_LIMIT = 8
+        private const val CHARACTERS_SECOND_LIMIT = 12
     }
 
     private lateinit var fragmentView: View
@@ -132,28 +133,31 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
      * Comma in value is not considered a character so if value has one, there is need to increase the limit
      */
     private fun refreshLengthFilter(value: CharSequence?) {
-        var limit = CHARACTERS_LIMIT
+        var limit = CHARACTERS_FIRST_LIMIT
 
         if (value != null && value.contains(".")) {
-            limit = CHARACTERS_LIMIT + 1
+            limit = CHARACTERS_FIRST_LIMIT + 1
         }
 
         val filter = InputFilter.LengthFilter(limit)
         baseValue.filters = arrayOf(filter)
     }
 
-    private fun adjustResultTextSize(value: Float) {
+    private fun adjustResultTextSize(value: Double) {
         val length = value.toString().length - 1        // comma is not considered a character
         var size = resources.getDimension(R.dimen.converter_value_text_size)
 
-        if (length > CHARACTERS_LIMIT) {
+        if (length in CHARACTERS_FIRST_LIMIT..CHARACTERS_SECOND_LIMIT) {
             size = resources.getDimension(R.dimen.converter_value_text_size_small)
+
+        } else if (length > CHARACTERS_SECOND_LIMIT) {
+            size = resources.getDimension(R.dimen.converter_value_text_size_tiny)
         }
 
         resultValue.setTextSize(TypedValue.COMPLEX_UNIT_PX, size)
     }
 
-    private fun updateView(value: Float?) {
+    private fun updateView(value: Double?) {
         val base = viewModel.getActualBase()
         val result = viewModel.getActualResult()
 
@@ -165,7 +169,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
             if (value != null) {
                 adjustResultTextSize(value)
-                resultValue.text = value.toString()
+                resultValue.text = value.toBigDecimal().stripTrailingZeros().toPlainString()
             }
 
             val baseFlagImage = base.getFlagImageId(requireContext())
@@ -201,7 +205,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         val value = baseValue.text.toString()
 
         if (isValidValue(value)) {
-            viewModel.updateActualConversion(base, result, value.toFloat())
+            viewModel.updateActualConversion(base, result, value.toDouble())
         } else if (value.isEmpty()) {
             viewModel.updateActualConversion(base, result, null)
         }
