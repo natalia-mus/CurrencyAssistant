@@ -1,6 +1,5 @@
 package com.example.euroexchangerate.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.euroexchangerate.api.Repository
@@ -18,7 +17,7 @@ class CurrencyConverterViewModel : ViewModel() {
 
     private var rates: SingleDayRates? = null
 
-    val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
+    private val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
     private val today = DateUtil.getDate(0)
 
 
@@ -33,6 +32,8 @@ class CurrencyConverterViewModel : ViewModel() {
     fun getActualConversion(): Pair<Currency, Currency>? {
         return actualConversion.value
     }
+
+    fun getActualConversionInstance() = actualConversion
 
     fun updateActualConversion(base: Currency?, result: Currency?, value: Double?) {
         if (base != null && result != null) {
@@ -57,14 +58,12 @@ class CurrencyConverterViewModel : ViewModel() {
                         convert(value)
 
                     } else {
-                        rates = null
-                        conversionErrorOccurred.value = true
+                        handleError()
                     }
                 }
 
                 override fun onError() {
-                    rates = null
-                    conversionErrorOccurred.value = true
+                    handleError()
                 }
             })
 
@@ -124,6 +123,11 @@ class CurrencyConverterViewModel : ViewModel() {
         }
 
         return result
+    }
+
+    private fun handleError() {
+        rates = null
+        conversionErrorOccurred.value = true
     }
 
 }
