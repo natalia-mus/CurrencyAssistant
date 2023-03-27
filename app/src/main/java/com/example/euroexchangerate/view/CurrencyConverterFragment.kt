@@ -24,7 +24,7 @@ import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     companion object {
-        private const val DEFAULT_VALUE = 1
+        private const val DEFAULT_BASE_VALUE = 1
         private const val CHARACTERS_FIRST_LIMIT = 8
         private const val CHARACTERS_SECOND_LIMIT = 12
     }
@@ -98,7 +98,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
         adjustFlagsDimensions()
 
-        baseValue.setText(DEFAULT_VALUE.toString())
+        baseValue.setText(DEFAULT_BASE_VALUE.toString())
         updateView(null)
 
         baseValue.addTextChangedListener(textChangedListener)
@@ -187,7 +187,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     private fun handleError(errorOccurred: Boolean) {
         if (errorOccurred) {
-            Toast.makeText(activity, getString(R.string.error_fetch_rates), Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, getString(R.string.error_conversion), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -260,6 +260,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         }
 
         updateActualConversion(base, result)
+        updateView(null)
     }
 
 }

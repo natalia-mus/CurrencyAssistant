@@ -1,5 +1,6 @@
 package com.example.euroexchangerate.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.euroexchangerate.api.Repository
@@ -17,7 +18,7 @@ class CurrencyConverterViewModel : ViewModel() {
 
     private var rates: SingleDayRates? = null
 
-    private val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
+    val actualConversion = MutableLiveData(Pair(Currency.EUR, Currency.USD))
     private val today = DateUtil.getDate(0)
 
 
@@ -54,6 +55,10 @@ class CurrencyConverterViewModel : ViewModel() {
                     if (data != null && data.success) {
                         rates = data
                         convert(value)
+
+                    } else {
+                        rates = null
+                        conversionErrorOccurred.value = true
                     }
                 }
 
@@ -93,7 +98,7 @@ class CurrencyConverterViewModel : ViewModel() {
         val commaIndex = valueAsString.indexOf(".")
         val fractionPartLength = valueAsString.length - 1 - commaIndex
 
-        // if value has more than 5 numbers after comma there's need to round value
+        // if value has more than 5 numbers after comma there's need to round the value
         if (fractionPartLength > 5) {
             val wholeNumberPartLength = valueAsString.length - fractionPartLength - 1
             val firstPartAsString = valueAsString.substring(0, wholeNumberPartLength)                               // whole part of number
@@ -104,14 +109,14 @@ class CurrencyConverterViewModel : ViewModel() {
             val multiplier = (0.1).pow(lastPartAsString.length)
             val round = (lastPartAsString.toLong() * multiplier).roundToLong()    // result is always 0 or 1
 
-            // previous zeros are ignored when converting to Int, variable is necessary to recover second part after round
+            // previous zeros are ignored when converting to Int, variable is necessary to recover the second part after round
             var secondPartZerosAfterComma = ""
             while (secondPartAsString.startsWith("0")) {
                 secondPartZerosAfterComma += "0"
                 secondPartAsString = secondPartAsString.drop(1)
             }
 
-            // creating final value
+            // creating the final value
             val secondPart = secondPartAsString.toInt() + round
 
             val resultAsString = "$firstPartAsString.$secondPartZerosAfterComma$secondPart"
