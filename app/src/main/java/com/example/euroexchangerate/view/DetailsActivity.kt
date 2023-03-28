@@ -3,12 +3,13 @@ package com.example.euroexchangerate.view
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.euroexchangerate.Constants
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
 
 class DetailsActivity : AppCompatActivity() {
 
-    private var rateDetails: RateDetails? = RateDetails("", "", "")
+    private lateinit var rateDetails: RateDetails
 
     private lateinit var rating: TextView
     private lateinit var currencyName: TextView
@@ -18,11 +19,14 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        if (intent.hasExtra("rateDetails")) {
-            rateDetails = intent.getParcelableExtra("rateDetails")
-        }
+        if (intent.hasExtra(Constants.RATE_DETAILS)) {
+            val rateDetails = intent.getParcelableExtra(Constants.RATE_DETAILS) as RateDetails?
 
-        setView()
+            if (rateDetails != null) {
+                this.rateDetails = rateDetails
+                setView()
+            }
+        }
     }
 
     private fun setView() {
@@ -30,8 +34,8 @@ class DetailsActivity : AppCompatActivity() {
         currencyName = findViewById(R.id.activity_details_currency_name)
         date = findViewById(R.id.activity_details_date)
 
-        rating.text = rateDetails?.rating
-        currencyName.text = rateDetails?.currencyName
-        date.text = rateDetails?.date
+        rating.text = rateDetails.rating.toString()
+        currencyName.text = rateDetails.currency.name
+        date.text = rateDetails.date
     }
 }

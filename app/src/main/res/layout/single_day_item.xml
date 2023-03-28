@@ -26,7 +26,7 @@
         android:background="@color/blue_navy"
         android:fontFamily="@font/aldrich"
         android:padding="8dp"
-        android:text="@string/euro"
+        android:text="@string/euro_symbol"
         android:textColor="@color/green_light"
         android:textSize="18sp"
         android:textStyle="bold"

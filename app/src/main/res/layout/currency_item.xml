@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/currency_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/clickable_blue_navy"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="14dp">
+
+    <ImageView
+        android:id="@+id/currency_item_flag"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/eur_flag_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/currency_item_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/currency_item_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/currency_item_flag"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/currency_item_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:textColor="@color/green_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="EUR" />
+
+        <TextView
+            android:id="@+id/currency_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:textColor="@color/green_light"
+            android:textSize="13sp"
+            tools:text="Euro" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
