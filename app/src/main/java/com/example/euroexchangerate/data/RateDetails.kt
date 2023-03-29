@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RateDetails(
     val currency: Currency,
-    val rating: Double,
+    var rating: Double,
     val date: String?
 ) : Parcelable {
 

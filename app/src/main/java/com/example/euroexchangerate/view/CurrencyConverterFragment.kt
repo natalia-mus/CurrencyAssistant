@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.CurrencyType
+import com.example.euroexchangerate.util.Formatter
 import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
 class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
@@ -170,7 +171,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
             if (value != null) {
                 adjustResultTextSize(value)
-                resultValue.text = value.toBigDecimal().stripTrailingZeros().toPlainString()
+                resultValue.text = Formatter.formatValueToString(value)
             }
 
             val baseFlagImage = base.getFlagImageId(requireContext())
