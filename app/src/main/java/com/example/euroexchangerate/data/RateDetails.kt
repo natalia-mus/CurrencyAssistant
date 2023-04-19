@@ -8,9 +8,4 @@ data class RateDetails(
     val currency: Currency,
     var rating: Double,
     val date: String?
-) : Parcelable {
-
-    fun getImagePath(): String {
-        return currency.name + "_flag_circle.png"
-    }
-}
+) : Parcelable
