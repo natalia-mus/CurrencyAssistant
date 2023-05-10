@@ -6,6 +6,7 @@ import com.example.euroexchangerate.api.Repository
 import com.example.euroexchangerate.api.RepositoryCallback
 import com.example.euroexchangerate.data.SingleDayRates
 import com.example.euroexchangerate.util.DateUtil
+import com.example.euroexchangerate.util.Formatter
 
 class RatesViewModel : ViewModel() {
 
@@ -30,7 +31,8 @@ class RatesViewModel : ViewModel() {
         Repository.getDataFromAPI(date, object : RepositoryCallback<SingleDayRates> {
             override fun onSuccess(data: SingleDayRates?) {
                 if (data != null && data.success) {
-                    array.add(data)
+                    val response = prepareResponse(data)
+                    array.add(response)
                     selectedDateRates.value = array
                     daysInRecycler.value = daysInRecycler.value?.toInt()?.plus(1)
                     success.value = true
@@ -45,6 +47,20 @@ class RatesViewModel : ViewModel() {
                 loading.value = false
             }
         })
+    }
+
+    /**
+     * Formats received response
+     */
+    private fun prepareResponse(data: SingleDayRates): SingleDayRates {
+        val ratesList = data.getCurrenciesList()
+
+        for (rate in ratesList) {
+            val formattedRate = Formatter.formatValue(rate.rating)
+            rate.rating = formattedRate
+        }
+
+        return data
     }
 
 }
