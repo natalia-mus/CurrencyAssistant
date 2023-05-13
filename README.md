@@ -7,3 +7,9 @@ Application was built according to the MVVM pattern, uses ViewModel and MutableL
 ![euro_exchange_rate](https://user-images.githubusercontent.com/56269299/131129171-2f9ac216-ef1d-40d6-87f6-b27f9f2fb4a9.png)
 
 API source: [fixer.io](https://fixer.io)
+
+<br/><br/>
+
+## Author
+
+[Natalia Muskała](https://github.com/natalia-mus)
