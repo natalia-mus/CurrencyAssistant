@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Euro Exchange Rate</string>
     <string name="cancel">cancel</string>
+    <string name="change_default_currency">Change default currency</string>
     <string name="converter">Converter</string>
     <string name="error_fetch_rates">An error occurred. Data can not be loaded.</string>
     <string name="error_conversion">"An error occurred. Conversion can not succeed.</string>

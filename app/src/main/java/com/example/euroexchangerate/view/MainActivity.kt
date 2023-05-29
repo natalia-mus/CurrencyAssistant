@@ -1,6 +1,10 @@
 package com.example.euroexchangerate.view
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.euroexchangerate.R
@@ -18,6 +22,28 @@ class MainActivity : AppCompatActivity() {
 
         setOnNavigationItemSelectedListener()
         changeFragment(RatesFragment())
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_change_default_currency -> {
+                openChangeDefaultCurrencyDialog()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openChangeDefaultCurrencyDialog() {
+        val dialog = Dialog(this)
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.currency_picker, findViewById(R.id.currency_picker))
+        dialog.setContentView(dialogView)
+        dialog.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onPrepareOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
     private fun setOnNavigationItemSelectedListener() {
