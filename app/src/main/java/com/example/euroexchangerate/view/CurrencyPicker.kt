@@ -3,6 +3,7 @@ package com.example.euroexchangerate.view
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,7 @@ import com.example.euroexchangerate.data.Currency
 
 class CurrencyPicker(
     context: Context,
-    private val actualConversion: Pair<Currency, Currency>,
+    private val actualConversion: Pair<Currency, Currency>?,
     private val onCurrencyChangedAction: OnCurrencyChangedAction
 ) : Dialog(context) {
 
@@ -27,6 +28,7 @@ class CurrencyPicker(
 
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,14 @@ class CurrencyPicker(
             cancel()
         }
 
+        if (actualConversion == null) {
+            saveButton = findViewById(R.id.currency_picker_save)
+            saveButton.visibility = View.VISIBLE
+
+        } else {
+            cancelButton.setBackgroundColor(context.resources.getColor(R.color.green_light, context.theme))
+        }
+
         val dialogWindow: ConstraintLayout = findViewById(R.id.currency_picker)
         val layoutParams = dialogWindow.layoutParams
         layoutParams.width = calcHorizontal(DIALOG_WIDTH)
@@ -54,8 +64,10 @@ class CurrencyPicker(
 
     private fun prepareData() {
         val currenciesSet = Currency.getAll()
-        currenciesSet.remove(actualConversion.first)
-        currenciesSet.remove(actualConversion.second)
+        if (actualConversion != null) {
+            currenciesSet.remove(actualConversion.first)
+            currenciesSet.remove(actualConversion.second)
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, onCurrencyChangedAction)
