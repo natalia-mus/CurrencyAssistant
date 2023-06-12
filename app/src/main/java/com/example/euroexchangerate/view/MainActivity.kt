@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
     }
 
     private fun openChangeDefaultCurrencyDialog() {
-        val currencyPicker = CurrencyPicker(this, null, this)
+        val actualDefaultCurrency = Currency.CZK
+        val currencyPicker = CurrencyPicker(this, actualDefaultCurrency, this)
         currencyPicker.show()
     }
 

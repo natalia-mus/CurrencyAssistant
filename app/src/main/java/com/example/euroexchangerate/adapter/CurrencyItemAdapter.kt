@@ -17,9 +17,9 @@ class CurrencyItemAdapter(
     private val currenciesSet: ArrayList<Currency>,
     private val context: Context,
     private val parent: CurrencyPicker,
-    private val onCurrencyChangedAction: OnCurrencyChangedAction
-) :
-    RecyclerView.Adapter<CurrencyItemViewHolder>() {
+    private val onCurrencyChangedAction: OnCurrencyChangedAction,
+    private val actualDefaultCurrency: Currency?
+) : RecyclerView.Adapter<CurrencyItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyItemViewHolder {
         return CurrencyItemViewHolder(LayoutInflater.from(context).inflate(R.layout.currency_item, parent, false))
@@ -39,6 +39,10 @@ class CurrencyItemAdapter(
         holder.currencyItem.setOnClickListener() {
             onCurrencyChangedAction.changeCurrency(currency)
             parent.dismiss()
+        }
+
+        if (currency == actualDefaultCurrency) {
+            holder.currencyItem.isSelected = true
         }
     }
 

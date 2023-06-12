@@ -7,6 +7,7 @@
     <color name="white_transparent">#1EFFFFFF</color>
     <color name="blue_navy">#073042</color>
     <color name="blue_navy_light">#0A435C</color>
+    <color name="blue_navy_selected">#0E597A</color>
     <color name="green_light">#3DDC84</color>
     <color name="gray_light">#E8E8E8</color>
     <color name="gray">#D6D6D6</color>

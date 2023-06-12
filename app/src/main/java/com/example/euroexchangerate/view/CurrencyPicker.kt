@@ -12,11 +12,7 @@ import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.CurrencyItemAdapter
 import com.example.euroexchangerate.data.Currency
 
-class CurrencyPicker(
-    context: Context,
-    private val actualConversion: Pair<Currency, Currency>?,
-    private val onCurrencyChangedAction: OnCurrencyChangedAction
-) : Dialog(context) {
+class CurrencyPicker(context: Context) : Dialog(context) {
 
     companion object {
         private const val DESIGN_HEIGHT = 731f
@@ -30,6 +26,21 @@ class CurrencyPicker(
     private lateinit var recyclerView: RecyclerView
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
+
+    private var actualDefaultCurrency: Currency? = null
+    private var actualConversion: Pair<Currency, Currency>? = null
+    private var onCurrencyChangedAction: OnCurrencyChangedAction? = null
+
+
+    constructor(context: Context, actualDefaultCurrency: Currency, onCurrencyChangedAction: OnCurrencyChangedAction) : this(context) {
+        this.actualDefaultCurrency = actualDefaultCurrency
+        this.onCurrencyChangedAction = onCurrencyChangedAction
+    }
+
+    constructor(context: Context, actualConversion: Pair<Currency, Currency>?, onCurrencyChangedAction: OnCurrencyChangedAction): this(context) {
+        this.actualConversion = actualConversion
+        this.onCurrencyChangedAction = onCurrencyChangedAction
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +75,16 @@ class CurrencyPicker(
 
     private fun prepareData() {
         val currenciesSet = Currency.getAll()
+
         if (actualConversion != null) {
-            currenciesSet.remove(actualConversion.first)
-            currenciesSet.remove(actualConversion.second)
+            currenciesSet.remove(actualConversion!!.first)
+            currenciesSet.remove(actualConversion!!.second)
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, onCurrencyChangedAction)
+        if (onCurrencyChangedAction != null) {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, onCurrencyChangedAction!!, actualDefaultCurrency)
+        }
     }
 
     /**
