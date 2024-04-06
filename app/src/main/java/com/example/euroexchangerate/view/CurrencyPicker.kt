@@ -12,7 +12,7 @@ import com.example.euroexchangerate.R
 import com.example.euroexchangerate.adapter.CurrencyItemAdapter
 import com.example.euroexchangerate.data.Currency
 
-class CurrencyPicker(context: Context) : Dialog(context) {
+class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedAction {
 
     companion object {
         private const val DESIGN_HEIGHT = 731f
@@ -30,10 +30,12 @@ class CurrencyPicker(context: Context) : Dialog(context) {
     private var actualDefaultCurrency: Currency? = null
     private var actualConversion: Pair<Currency, Currency>? = null
     private var onCurrencyChangedAction: OnCurrencyChangedAction? = null
+    private var newDefaultCurrency: Currency? = null
 
 
     constructor(context: Context, actualDefaultCurrency: Currency, onCurrencyChangedAction: OnCurrencyChangedAction) : this(context) {
         this.actualDefaultCurrency = actualDefaultCurrency
+        this.newDefaultCurrency = actualDefaultCurrency
         this.onCurrencyChangedAction = onCurrencyChangedAction
     }
 
@@ -49,6 +51,10 @@ class CurrencyPicker(context: Context) : Dialog(context) {
         setView()
     }
 
+    override fun changeCurrency(currency: Currency) {
+        newDefaultCurrency = currency
+    }
+
     private fun setView() {
         recyclerView = findViewById(R.id.currency_picker_recyclerView)
         cancelButton = findViewById(R.id.currency_picker_cancel)
@@ -60,6 +66,11 @@ class CurrencyPicker(context: Context) : Dialog(context) {
         if (actualConversion == null) {
             saveButton = findViewById(R.id.currency_picker_save)
             saveButton.visibility = View.VISIBLE
+
+            saveButton.setOnClickListener {
+                newDefaultCurrency?.let { currency -> onCurrencyChangedAction!!.changeCurrency(currency) }
+                dismiss()
+            }
 
         } else {
             cancelButton.setBackgroundColor(context.resources.getColor(R.color.green_light, context.theme))
@@ -79,11 +90,15 @@ class CurrencyPicker(context: Context) : Dialog(context) {
         if (actualConversion != null) {
             currenciesSet.remove(actualConversion!!.first)
             currenciesSet.remove(actualConversion!!.second)
-        }
 
-        if (onCurrencyChangedAction != null) {
+            if (onCurrencyChangedAction != null) {
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, onCurrencyChangedAction!!, actualDefaultCurrency)
+            }
+
+        } else {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, onCurrencyChangedAction!!, actualDefaultCurrency)
+            recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, actualDefaultCurrency)
         }
     }
 

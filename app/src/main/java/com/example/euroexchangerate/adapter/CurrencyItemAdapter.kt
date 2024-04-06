@@ -8,18 +8,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.Currency
-import com.example.euroexchangerate.view.CurrencyPicker
 import com.example.euroexchangerate.view.OnCurrencyChangedAction
 
 class CurrencyItemAdapter(
     private val currenciesSet: ArrayList<Currency>,
     private val context: Context,
-    private val parent: CurrencyPicker,
     private val onCurrencyChangedAction: OnCurrencyChangedAction,
-    private val actualDefaultCurrency: Currency?
+    private var actualDefaultCurrency: Currency?
 ) : RecyclerView.Adapter<CurrencyItemViewHolder>() {
+
+    private var previouslyCheckedItem: CurrencyItemViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyItemViewHolder {
         return CurrencyItemViewHolder(LayoutInflater.from(context).inflate(R.layout.currency_item, parent, false))
@@ -38,18 +39,29 @@ class CurrencyItemAdapter(
 
         holder.currencyItem.setOnClickListener() {
             onCurrencyChangedAction.changeCurrency(currency)
-            parent.dismiss()
+            actualDefaultCurrency = currency
+            holder.checkSelectedItem(currency, actualDefaultCurrency, previouslyCheckedItem)
+            previouslyCheckedItem = holder
         }
 
-        holder.currencyItem.isSelected = currency == actualDefaultCurrency
+        holder.checkSelectedItem(currency, actualDefaultCurrency, null)
+
+        if (currency == actualDefaultCurrency) {
+            previouslyCheckedItem = holder
+        }
     }
 
     override fun getItemCount() = currenciesSet.size
 }
 
-class CurrencyItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CurrencyItemViewHolder(view: View) : ViewHolder(view) {
     val currencyItem: ConstraintLayout = view.findViewById(R.id.currency_item)
     val currencyFlag: ImageView = view.findViewById(R.id.currency_item_flag)
     val currencyCode: TextView = view.findViewById(R.id.currency_item_code)
     val currencyName: TextView = view.findViewById(R.id.currency_item_name)
+
+    fun checkSelectedItem(currency: Currency, actualDefaultCurrency: Currency?, previouslyCheckedItem: CurrencyItemViewHolder?) {
+        currencyItem.isSelected = currency == actualDefaultCurrency
+        if (previouslyCheckedItem != null) previouslyCheckedItem.currencyItem.isSelected = false
+    }
 }

@@ -30,6 +30,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         private const val CHARACTERS_SECOND_LIMIT = 12
     }
 
+    private var currencyPicker: CurrencyPicker? = null
+
     private lateinit var fragmentView: View
     private lateinit var viewModel: CurrencyConverterViewModel
 
@@ -217,8 +219,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         val actualConversion = viewModel.getActualConversion()
 
         if (actualConversion != null) {
-            val currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
-            currencyPicker.show()
+            currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
+            currencyPicker!!.show()
         }
     }
 
@@ -262,6 +264,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         }
 
         updateActualConversion(base, result)
+        currencyPicker!!.dismiss()
         updateView(null)
     }
 
