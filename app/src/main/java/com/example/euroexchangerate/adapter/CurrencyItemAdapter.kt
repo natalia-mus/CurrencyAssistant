@@ -41,9 +41,7 @@ class CurrencyItemAdapter(
             parent.dismiss()
         }
 
-        if (currency == actualDefaultCurrency) {
-            holder.currencyItem.isSelected = true
-        }
+        holder.currencyItem.isSelected = currency == actualDefaultCurrency
     }
 
     override fun getItemCount() = currenciesSet.size

@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.euroexchangerate.R
+import com.example.euroexchangerate.Settings
 import com.example.euroexchangerate.data.Currency
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -18,13 +19,14 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
         setContentView(R.layout.activity_main)
 
         navigation = findViewById(R.id.activity_main_bottomNavigation)
+        Settings.init(this)
 
         setOnNavigationItemSelectedListener()
         changeFragment(RatesFragment())
     }
 
     override fun changeCurrency(currency: Currency) {
-        TODO("Not yet implemented")
+        Settings.changeDefaultCurrency(currency)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
     }
 
     private fun openChangeDefaultCurrencyDialog() {
-        val actualDefaultCurrency = Currency.CZK
+        val actualDefaultCurrency = Settings.getDefaultCurrency()
         val currencyPicker = CurrencyPicker(this, actualDefaultCurrency, this)
         currencyPicker.show()
     }
