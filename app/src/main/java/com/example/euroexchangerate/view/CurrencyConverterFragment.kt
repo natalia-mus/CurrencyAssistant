@@ -14,15 +14,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.CurrencyType
-import com.example.euroexchangerate.util.Formatter
+import com.example.euroexchangerate.util.Converter
 import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
-class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
+class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
 
     companion object {
         private const val DEFAULT_BASE_VALUE = 1
@@ -82,6 +81,10 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         updateActualConversion()
 
         return fragmentView
+    }
+
+    override fun onBaseCurrencyChanged() {
+        TODO("Not yet implemented")
     }
 
     private fun initView() {
@@ -173,7 +176,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
             if (value != null) {
                 adjustResultTextSize(value)
-                resultValue.text = Formatter.formatValueToString(value)
+                resultValue.text = Converter.formatValueToString(value)
             }
 
             val baseFlagImage = base.getFlagImageId(requireContext())

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.Settings
 import com.example.euroexchangerate.data.Currency
@@ -14,6 +13,8 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
 
     lateinit var navigation: BottomNavigationView
 
+    private var currentFragment: CurrencyFragment = RatesFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,11 +23,12 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
         Settings.init(this)
 
         setOnNavigationItemSelectedListener()
-        changeFragment(RatesFragment())
+        changeFragment(currentFragment)
     }
 
     override fun changeCurrency(currency: Currency) {
         Settings.changeDefaultCurrency(currency)
+        currentFragment.onBaseCurrencyChanged()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -61,11 +63,12 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    private fun changeFragment(fragment: CurrencyFragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.activity_main_fragment, fragment)
             commit()
         }
+        currentFragment = fragment
     }
 
 }

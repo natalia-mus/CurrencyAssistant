@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
-import com.example.euroexchangerate.util.Formatter
+import com.example.euroexchangerate.util.Converter
 
 class RatesAdapter(
     private val currencies: ArrayList<RateDetails>,
@@ -33,7 +33,7 @@ class RatesAdapter(
 
         holder.currencyCode.text = rate.currency.name
         holder.currencyName.text = rate.currency.currencyName
-        holder.rating.text = Formatter.formatValueToString(rate.rating)
+        holder.rating.text = Converter.formatValueToString(rate.rating)
 
         holder.row.setOnClickListener() {
             onItemClickAction.itemClicked(rate)

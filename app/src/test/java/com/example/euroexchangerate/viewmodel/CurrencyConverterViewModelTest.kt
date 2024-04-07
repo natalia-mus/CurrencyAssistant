@@ -40,7 +40,7 @@ class CurrencyConverterViewModelTest {
         0.0,
         0.0,
         0.0,
-        0.0,
+        0.00000004829,
         0.0,
         0.0,
         0.0,
@@ -160,6 +160,14 @@ class CurrencyConverterViewModelTest {
         viewModel.updateActualConversion(Currency.EUR, Currency.PLN, 0.618219435)
         val result = viewModel.convertedValue.value
         Assert.assertTrue(result == 2.90563)
+    }
+
+
+    @Test
+    fun convertWhenResultHasManyZerosAndNeedsToBeRounded() {
+        viewModel.updateActualConversion(Currency.EUR, Currency.CZK, 1.0)
+        val result = viewModel.convertedValue.value
+        Assert.assertTrue(result == 0.0)
     }
 
 }

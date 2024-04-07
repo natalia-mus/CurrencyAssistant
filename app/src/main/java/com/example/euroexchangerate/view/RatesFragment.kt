@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,7 @@ import com.example.euroexchangerate.data.RateDetails
 import com.example.euroexchangerate.data.SingleDayRates
 import com.example.euroexchangerate.viewmodel.RatesViewModel
 
-class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
+class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     private lateinit var fragmentView: View
     private lateinit var viewModel: RatesViewModel
@@ -48,6 +47,10 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
         val intent = Intent(requireContext(), DetailsActivity::class.java)
         intent.putExtra(Constants.RATE_DETAILS, rateDetails)
         startActivity(intent)
+    }
+
+    override fun onBaseCurrencyChanged() {
+        // todo
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
