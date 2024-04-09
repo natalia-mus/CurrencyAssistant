@@ -50,7 +50,8 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
     }
 
     override fun onBaseCurrencyChanged() {
-        // todo
+        loading(true)
+        viewModel.getNewData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -77,7 +78,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
                 _scrollPosition += dy
 
                 if (_scrollPosition >= bottom) {
-                    viewModel.getNewData()
+                    viewModel.getNextDayRates()
                     _scrollPosition = 0
                 }
 
@@ -95,7 +96,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
         }
 
         if (!_todayAlreadyFetched) {
-            viewModel.getNewData()
+            viewModel.getNextDayRates()
             _todayAlreadyFetched = true
         }
 
@@ -107,14 +108,16 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     }
 
-    private fun updateView(data: MutableList<SingleDayRates>) {
-        if (::adapter.isInitialized) {
-            adapter.dataSetChanged(data)
-        } else {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = SingleDayAdapter(data, requireContext(), this)
-            recyclerView.layoutManager = layoutManager
-            recyclerView.adapter = adapter
+    private fun updateView(data: MutableList<SingleDayRates>?) {
+        if (data != null) {
+            if (::adapter.isInitialized) {
+                adapter.dataSetChanged(data)
+            } else {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = SingleDayAdapter(data, requireContext(), this)
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = adapter
+            }
         }
     }
 

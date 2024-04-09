@@ -22,6 +22,13 @@ class RatesViewModel : ViewModel() {
 
 
     fun getNewData() {
+        array.clear()
+        selectedDateRates.value?.clear()
+        daysInRecycler.value = 0
+        getNextDayRates()
+    }
+
+    fun getNextDayRates() {
         val date = daysInRecycler.value?.let { DateUtil.getDate(it) }
         if (date != null) {
             getData(date)

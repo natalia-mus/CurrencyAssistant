@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
 
-    lateinit var navigation: BottomNavigationView
+    private lateinit var navigation: BottomNavigationView
 
     private var currentFragment: CurrencyFragment = RatesFragment()
 

@@ -39,12 +39,9 @@ object Converter {
         // if value has more than 5 numbers after comma there's need to round the value
         if (fractionPartLength > 5) {
             val wholeNumberPartLength = valueAsString.length - fractionPartLength - 1
-            val firstPartAsString =
-                valueAsString.substring(0, wholeNumberPartLength)                               // whole part of number
-            var secondPartAsString =
-                valueAsString.substring(wholeNumberPartLength + 1, wholeNumberPartLength + 6)  // first 5 places after comma
-            val lastPartAsString =
-                valueAsString.substring(wholeNumberPartLength + 6, valueAsString.length)         // remaining places after comma
+            val firstPartAsString = valueAsString.substring(0, wholeNumberPartLength)                               // whole part of number
+            var secondPartAsString = valueAsString.substring(wholeNumberPartLength + 1, wholeNumberPartLength + 6)  // first 5 places after comma
+            val lastPartAsString = valueAsString.substring(wholeNumberPartLength + 6, valueAsString.length)         // remaining places after comma
 
             // converting last part to decimal form 0.x
             val multiplier = (0.1).pow(lastPartAsString.length)
