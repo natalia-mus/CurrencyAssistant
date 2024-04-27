@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
+import com.example.euroexchangerate.Settings
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.CurrencyType
 import com.example.euroexchangerate.util.Converter
@@ -50,6 +51,8 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
 
     private lateinit var currencyTypeToChange: CurrencyType
 
+    private var defaultConverterConfigurationChanged = false
+
     private val onBaseCurrencyClickListener = OnClickListener {
         currencyTypeToChange = CurrencyType.BASE
         openCurrencyPicker()
@@ -66,6 +69,7 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
             refreshLengthFilter(value)
             updateActualConversion()
+            defaultConverterConfigurationChanged = true
         }
     }
 
@@ -78,13 +82,15 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
         viewModel = ViewModelProvider(this).get(CurrencyConverterViewModel::class.java)
         initView()
         setObservers()
-        updateActualConversion()
+        setDefaultCurrencies()
 
         return fragmentView
     }
 
     override fun onBaseCurrencyChanged() {
-        TODO("Not yet implemented")
+        if (!defaultConverterConfigurationChanged) {
+            setDefaultCurrencies()
+        }
     }
 
     private fun initView() {
@@ -198,6 +204,12 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
         }
     }
 
+    private fun setDefaultCurrencies() {
+        val baseCurrency = Settings.getDefaultCurrency()
+        val resultCurrency = if (baseCurrency == Currency.USD) Currency.EUR else Currency.USD
+        updateActualConversion(baseCurrency, resultCurrency)
+    }
+
     /**
      * Converts currency value without changing base and result currencies
      */
@@ -251,6 +263,7 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
         resultCurrencyName.text = newResultCurrencyName
 
         updateActualConversion(newBase, newResult)
+        defaultConverterConfigurationChanged = true
     }
 
     override fun changeCurrency(currency: Currency) {
@@ -268,6 +281,7 @@ class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
 
         updateActualConversion(base, result)
         currencyPicker!!.dismiss()
+        defaultConverterConfigurationChanged = true
         updateView(null)
     }
 

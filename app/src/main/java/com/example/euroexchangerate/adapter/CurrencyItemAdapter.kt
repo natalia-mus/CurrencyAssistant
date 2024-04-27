@@ -62,6 +62,6 @@ class CurrencyItemViewHolder(view: View) : ViewHolder(view) {
 
     fun checkSelectedItem(currency: Currency, actualDefaultCurrency: Currency?, previouslyCheckedItem: CurrencyItemViewHolder?) {
         currencyItem.isSelected = currency == actualDefaultCurrency
-        if (previouslyCheckedItem != null) previouslyCheckedItem.currencyItem.isSelected = false
+        if (previouslyCheckedItem != null && this != previouslyCheckedItem) previouslyCheckedItem.currencyItem.isSelected = false
     }
 }
