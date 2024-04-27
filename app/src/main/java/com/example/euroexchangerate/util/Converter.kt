@@ -21,7 +21,14 @@ object Converter {
         } else {
             rates.getRate(resultCurrency)!!
         }
-        val converted = (result / base) * value
+
+        val converted =
+            if (base > 0) {
+                (result / base) * value
+            } else {
+                0.0
+            }
+
         return formatValue(converted)
     }
 
@@ -34,7 +41,7 @@ object Converter {
 
         // counting places after comma
         val commaIndex = valueAsString.indexOf(".")
-        val fractionPartLength = valueAsString.length - 1 - commaIndex
+        val fractionPartLength = if (commaIndex != -1) valueAsString.length - 1 - commaIndex else 0
 
         // if value has more than 5 numbers after comma there's need to round the value
         if (fractionPartLength > 5) {
