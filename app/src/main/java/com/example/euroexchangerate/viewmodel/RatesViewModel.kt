@@ -38,25 +38,25 @@ class RatesViewModel : ViewModel() {
     private fun convertRatesToDefaultCurrency(singleDayRates: MutableList<SingleDayRates>, defaultCurrency: Currency): MutableList<SingleDayRates> {
         if (defaultCurrency != Currency.EUR) {
             for (singleDayRate in singleDayRates) {
-                if (singleDayRate.base == Currency.EUR.name) {
-                    singleDayRate.base = defaultCurrency.name
-                    val convertedRates = ArrayList<RateDetails>()
+                singleDayRate.base = defaultCurrency.name
+                val convertedRates = ArrayList<RateDetails>()
 
-                    for (rate in singleDayRate.getCurrenciesList()) {
-                        if (rate.currency != defaultCurrency) {
-                            val convertedRate = Converter.convert(defaultCurrency, rate.currency, 1.0, singleDayRate)
-                            rate.rating = convertedRate
-                            convertedRates.add(rate)
-                        }
+                for (rate in singleDayRate.getCurrenciesList()) {
+                    if (rate.currency != defaultCurrency) {
+                        val convertedRate = Converter.convert(defaultCurrency, rate.currency, 1.0, singleDayRate)
+                        rate.rating = convertedRate
+                        convertedRates.add(rate)
                     }
+                }
 
+                if (singleDayRate.base != Currency.EUR.name) {
                     // add euro to currencies list
                     val euroRating = Converter.convert(defaultCurrency, Currency.EUR, 1.0, singleDayRate)
                     val euro = RateDetails(Currency.EUR, euroRating, singleDayRate.date)
                     convertedRates.add(euro)
-
-                    singleDayRate.setConvertedCurrenciesList(convertedRates)
                 }
+
+                singleDayRate.setConvertedCurrenciesList(convertedRates)
             }
         }
 
