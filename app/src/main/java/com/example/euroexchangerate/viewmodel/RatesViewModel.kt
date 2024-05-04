@@ -8,8 +8,8 @@ import com.example.euroexchangerate.api.RepositoryCallback
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.RateDetails
 import com.example.euroexchangerate.data.SingleDayRates
-import com.example.euroexchangerate.util.DateUtil
 import com.example.euroexchangerate.util.Converter
+import com.example.euroexchangerate.util.DateUtil
 
 class RatesViewModel : ViewModel() {
 
