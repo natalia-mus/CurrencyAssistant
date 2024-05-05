@@ -82,7 +82,7 @@ object TestRates {
         return SingleDayRates(true, Currency.EUR.name, getDate(), getRates())
     }
 
-    /***
+    /**
      * Returns date in format YYYY-MM-DD
      */
     private fun getDate(): String {
@@ -93,11 +93,16 @@ object TestRates {
         val day = today.get(Calendar.DAY_OF_MONTH)
 
         var monthAsString = month.toString()
+        var dayAsString = day.toString()
 
         if (month < 10) {
             monthAsString = "0$monthAsString"
         }
 
-        return "$year-$monthAsString-$day"
+        if (day < 10) {
+            dayAsString = "0$dayAsString"
+        }
+
+        return "$year-$monthAsString-$dayAsString"
     }
 }
