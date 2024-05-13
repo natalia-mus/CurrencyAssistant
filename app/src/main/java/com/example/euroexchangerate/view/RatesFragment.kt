@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +24,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
     private lateinit var viewModel: RatesViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SingleDayAdapter
-    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar: ConstraintLayout
     private lateinit var layoutManager: LinearLayoutManager
     private var _todayAlreadyFetched = false
     private var _scrollPosition = 0
@@ -125,7 +125,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
         if (loading) {
             progressBar.visibility = View.VISIBLE
         } else {
-            progressBar.visibility = View.INVISIBLE
+            progressBar.visibility = View.GONE
         }
     }
 
