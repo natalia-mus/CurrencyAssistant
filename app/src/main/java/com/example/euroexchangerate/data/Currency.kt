@@ -85,6 +85,11 @@ enum class Currency(val currencyName: String) {
 
             return result
         }
+
+        /**
+         * Returns Currency by given code, null if currency of given code does not exist
+         */
+        fun getByCode(currencyCode: String) = valueOf(currencyCode)
     }
 
     /**
@@ -94,41 +99,6 @@ enum class Currency(val currencyName: String) {
         return context.resources?.getIdentifier(getCurrencyCodeToLowerCase() + FLAG_IMAGE_NAME, DRAWABLE, context.packageName)
     }
 
-    private fun getCurrencyCodeToLowerCase(): String {
-        var result = ""
-
-        for (letter in name) {
-            when (letter) {
-                'A' -> result += "a"
-                'B' -> result += "b"
-                'C' -> result += "c"
-                'D' -> result += "d"
-                'E' -> result += "e"
-                'F' -> result += "f"
-                'G' -> result += "g"
-                'H' -> result += "h"
-                'I' -> result += "i"
-                'J' -> result += "j"
-                'K' -> result += "k"
-                'L' -> result += "l"
-                'M' -> result += "m"
-                'N' -> result += "n"
-                'O' -> result += "o"
-                'P' -> result += "p"
-                'Q' -> result += "q"
-                'R' -> result += "r"
-                'S' -> result += "s"
-                'T' -> result += "t"
-                'U' -> result += "u"
-                'V' -> result += "v"
-                'W' -> result += "w"
-                'X' -> result += "x"
-                'Y' -> result += "y"
-                'Z' -> result += "z"
-            }
-        }
-
-        return result
-    }
+    private fun getCurrencyCodeToLowerCase() = name.toLowerCase()
 
 }

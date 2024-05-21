@@ -14,21 +14,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.euroexchangerate.R
+import com.example.euroexchangerate.Settings
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.CurrencyType
-import com.example.euroexchangerate.util.Formatter
+import com.example.euroexchangerate.util.Converter
 import com.example.euroexchangerate.viewmodel.CurrencyConverterViewModel
 
-class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
+class CurrencyConverterFragment: CurrencyFragment(), OnCurrencyChangedAction {
 
     companion object {
         private const val DEFAULT_BASE_VALUE = 1
         private const val CHARACTERS_FIRST_LIMIT = 8
         private const val CHARACTERS_SECOND_LIMIT = 12
     }
+
+    private var currencyPicker: CurrencyPicker? = null
 
     private lateinit var fragmentView: View
     private lateinit var viewModel: CurrencyConverterViewModel
@@ -49,6 +51,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
     private lateinit var currencyTypeToChange: CurrencyType
 
+    private var defaultConverterConfigurationChanged = false
+
     private val onBaseCurrencyClickListener = OnClickListener {
         currencyTypeToChange = CurrencyType.BASE
         openCurrencyPicker()
@@ -65,6 +69,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         override fun onTextChanged(value: CharSequence?, p1: Int, p2: Int, p3: Int) {
             refreshLengthFilter(value)
             updateActualConversion()
+            defaultConverterConfigurationChanged = true
         }
     }
 
@@ -77,9 +82,15 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         viewModel = ViewModelProvider(this).get(CurrencyConverterViewModel::class.java)
         initView()
         setObservers()
-        updateActualConversion()
+        setDefaultCurrencies()
 
         return fragmentView
+    }
+
+    override fun onBaseCurrencyChanged() {
+        if (!defaultConverterConfigurationChanged) {
+            setDefaultCurrencies()
+        }
     }
 
     private fun initView() {
@@ -171,7 +182,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
 
             if (value != null) {
                 adjustResultTextSize(value)
-                resultValue.text = Formatter.formatValueToString(value)
+                resultValue.text = Converter.formatValueToString(value)
             }
 
             val baseFlagImage = base.getFlagImageId(requireContext())
@@ -191,6 +202,12 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         if (errorOccurred) {
             Toast.makeText(activity, getString(R.string.error_conversion), Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun setDefaultCurrencies() {
+        val baseCurrency = Settings.getDefaultCurrency()
+        val resultCurrency = if (baseCurrency == Currency.USD) Currency.EUR else Currency.USD
+        updateActualConversion(baseCurrency, resultCurrency)
     }
 
     /**
@@ -217,8 +234,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         val actualConversion = viewModel.getActualConversion()
 
         if (actualConversion != null) {
-            val currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
-            currencyPicker.show()
+            currencyPicker = CurrencyPicker(requireContext(), actualConversion, this)
+            currencyPicker!!.show()
         }
     }
 
@@ -246,6 +263,7 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         resultCurrencyName.text = newResultCurrencyName
 
         updateActualConversion(newBase, newResult)
+        defaultConverterConfigurationChanged = true
     }
 
     override fun changeCurrency(currency: Currency) {
@@ -262,6 +280,8 @@ class CurrencyConverterFragment: Fragment(), OnCurrencyChangedAction {
         }
 
         updateActualConversion(base, result)
+        currencyPicker!!.dismiss()
+        defaultConverterConfigurationChanged = true
         updateView(null)
     }
 

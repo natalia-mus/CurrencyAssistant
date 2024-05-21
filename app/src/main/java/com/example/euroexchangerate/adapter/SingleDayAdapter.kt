@@ -1,5 +1,6 @@
 package com.example.euroexchangerate.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +21,10 @@ class SingleDayAdapter(
         return SingleDayViewHolder(LayoutInflater.from(context).inflate(R.layout.single_day_item, parent, false))
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SingleDayViewHolder, position: Int) {
         holder.date.text = data[position].date
+        holder.base.text = "1 " + data[position].base
 
         holder.ratesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         holder.ratesRecyclerView.adapter = RatesAdapter(data[position].getCurrenciesList(), context, onItemClickAction)
@@ -38,6 +41,7 @@ class SingleDayAdapter(
 
 
 class SingleDayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val base: TextView = view.findViewById(R.id.single_day_base)
     val date: TextView = view.findViewById(R.id.single_day_item_date)
     val ratesRecyclerView: RecyclerView = view.findViewById(R.id.single_day_item_recyclerView)
 }

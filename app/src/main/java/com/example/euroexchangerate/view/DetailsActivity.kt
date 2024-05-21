@@ -1,6 +1,7 @@
 package com.example.euroexchangerate.view
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.euroexchangerate.Constants
@@ -8,6 +9,11 @@ import com.example.euroexchangerate.R
 import com.example.euroexchangerate.data.RateDetails
 
 class DetailsActivity : AppCompatActivity() {
+
+    companion object {
+        private const val CHARACTERS_FIRST_LIMIT = 6
+        private const val CHARACTERS_SECOND_LIMIT = 7
+    }
 
     private lateinit var rateDetails: RateDetails
 
@@ -29,6 +35,14 @@ class DetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun setTextSize() {
+        val limit = if (rateDetails.rating.toString().contains(".")) CHARACTERS_SECOND_LIMIT else CHARACTERS_FIRST_LIMIT
+
+        if (rateDetails.rating.toString().length > limit) {
+            rating.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.converter_value_text_size))
+        }
+    }
+
     private fun setView() {
         rating = findViewById(R.id.activity_details_rating)
         currencyName = findViewById(R.id.activity_details_currency_name)
@@ -37,5 +51,7 @@ class DetailsActivity : AppCompatActivity() {
         rating.text = rateDetails.rating.toString()
         currencyName.text = rateDetails.currency.name
         date.text = rateDetails.date
+
+        setTextSize()
     }
 }

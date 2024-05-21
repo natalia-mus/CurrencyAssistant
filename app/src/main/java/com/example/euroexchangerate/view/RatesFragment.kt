@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,13 +18,13 @@ import com.example.euroexchangerate.data.RateDetails
 import com.example.euroexchangerate.data.SingleDayRates
 import com.example.euroexchangerate.viewmodel.RatesViewModel
 
-class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
+class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     private lateinit var fragmentView: View
     private lateinit var viewModel: RatesViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SingleDayAdapter
-    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar: ConstraintLayout
     private lateinit var layoutManager: LinearLayoutManager
     private var _todayAlreadyFetched = false
     private var _scrollPosition = 0
@@ -48,6 +47,11 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
         val intent = Intent(requireContext(), DetailsActivity::class.java)
         intent.putExtra(Constants.RATE_DETAILS, rateDetails)
         startActivity(intent)
+    }
+
+    override fun onBaseCurrencyChanged() {
+        loading(true)
+        viewModel.getNewData()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -74,7 +78,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
                 _scrollPosition += dy
 
                 if (_scrollPosition >= bottom) {
-                    viewModel.getNewData()
+                    viewModel.getNextDayRates()
                     _scrollPosition = 0
                 }
 
@@ -92,7 +96,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
         }
 
         if (!_todayAlreadyFetched) {
-            viewModel.getNewData()
+            viewModel.getNextDayRates()
             _todayAlreadyFetched = true
         }
 
@@ -104,14 +108,16 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
 
     }
 
-    private fun updateView(data: MutableList<SingleDayRates>) {
-        if (::adapter.isInitialized) {
-            adapter.dataSetChanged(data)
-        } else {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = SingleDayAdapter(data, requireContext(), this)
-            recyclerView.layoutManager = layoutManager
-            recyclerView.adapter = adapter
+    private fun updateView(data: MutableList<SingleDayRates>?) {
+        if (data != null) {
+            if (::adapter.isInitialized) {
+                adapter.dataSetChanged(data)
+            } else {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = SingleDayAdapter(data, requireContext(), this)
+                recyclerView.layoutManager = layoutManager
+                recyclerView.adapter = adapter
+            }
         }
     }
 
@@ -119,7 +125,7 @@ class RatesFragment : Fragment(), RatesAdapter.OnItemClickAction {
         if (loading) {
             progressBar.visibility = View.VISIBLE
         } else {
-            progressBar.visibility = View.INVISIBLE
+            progressBar.visibility = View.GONE
         }
     }
 

@@ -2,7 +2,7 @@ package com.example.euroexchangerate.data
 
 data class SingleDayRates(
     val success: Boolean,
-    val base: String,
+    var base: String,
     val date: String,
     private val rates: Rates
 ) {
@@ -168,6 +168,11 @@ data class SingleDayRates(
     }
 
     fun getSize(): Int = getCurrenciesList().size
+
+    fun setConvertedCurrenciesList(convertedCurrenciesList: ArrayList<RateDetails>) {
+        convertedCurrenciesList.sortBy { it.currency }
+        currencies = convertedCurrenciesList
+    }
 
     private fun getCurrencyItemByCode(currency: Currency): RateDetails? {
         var result: RateDetails? = null

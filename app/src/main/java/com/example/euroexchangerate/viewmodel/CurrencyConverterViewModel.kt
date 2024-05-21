@@ -6,8 +6,8 @@ import com.example.euroexchangerate.api.Repository
 import com.example.euroexchangerate.api.RepositoryCallback
 import com.example.euroexchangerate.data.Currency
 import com.example.euroexchangerate.data.SingleDayRates
+import com.example.euroexchangerate.util.Converter
 import com.example.euroexchangerate.util.DateUtil
-import com.example.euroexchangerate.util.Formatter
 
 class CurrencyConverterViewModel : ViewModel() {
 
@@ -44,6 +44,12 @@ class CurrencyConverterViewModel : ViewModel() {
         }
     }
 
+    private fun convert(value: Double) {
+        if (actualConversion.value != null) {
+            convertedValue.value = Converter.convert(actualConversion.value!!.first, actualConversion.value!!.second, value, rates!!)
+        }
+    }
+
     private fun convertCurrency(value: Double) {
         conversionErrorOccurred.value = false
 
@@ -66,20 +72,6 @@ class CurrencyConverterViewModel : ViewModel() {
 
         } else {
             convert(value)
-        }
-    }
-
-    private fun convert(value: Double) {
-        if (rates != null) {
-            val baseCurrency = actualConversion.value?.first
-            val resultCurrency = actualConversion.value?.second
-
-            if (baseCurrency != null && resultCurrency != null) {
-                val base = if (baseCurrency == Currency.EUR) { 1.0 } else { rates!!.getRate(baseCurrency)!! }
-                val result = if (resultCurrency == Currency.EUR) { 1.0 } else { rates!!.getRate(resultCurrency)!! }
-                val converted = (result / base) * value
-                convertedValue.value = Formatter.formatValue(converted)
-            }
         }
     }
 

@@ -1,9 +1,36 @@
 package com.example.euroexchangerate.util
 
+import com.example.euroexchangerate.data.Currency
+import com.example.euroexchangerate.data.SingleDayRates
 import kotlin.math.pow
 import kotlin.math.roundToLong
 
-object Formatter {
+object Converter {
+
+    /**
+     * Conversion between currencies, based on given rates
+     */
+    fun convert(baseCurrency: Currency, resultCurrency: Currency, value: Double, rates: SingleDayRates): Double {
+        val base = if (baseCurrency == Currency.EUR) {
+            1.0
+        } else {
+            rates.getRate(baseCurrency)!!
+        }
+        val result = if (resultCurrency == Currency.EUR) {
+            1.0
+        } else {
+            rates.getRate(resultCurrency)!!
+        }
+
+        val converted =
+            if (base > 0) {
+                (result / base) * value
+            } else {
+                0.0
+            }
+
+        return formatValue(converted)
+    }
 
     /**
      * Rounds value to 5 places after comma
@@ -14,7 +41,7 @@ object Formatter {
 
         // counting places after comma
         val commaIndex = valueAsString.indexOf(".")
-        val fractionPartLength = valueAsString.length - 1 - commaIndex
+        val fractionPartLength = if (commaIndex != -1) valueAsString.length - 1 - commaIndex else 0
 
         // if value has more than 5 numbers after comma there's need to round the value
         if (fractionPartLength > 5) {
@@ -35,7 +62,9 @@ object Formatter {
             }
 
             // creating the final value
-            val secondPart = secondPartAsString.toInt() + round
+            val secondPart = if (secondPartAsString.isNotEmpty()) {
+                secondPartAsString.toInt() + round
+            } else 0
 
             val resultAsString = "$firstPartAsString.$secondPartZerosAfterComma$secondPart"
             result = resultAsString.toDouble()

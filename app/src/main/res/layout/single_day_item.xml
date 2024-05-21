@@ -20,13 +20,13 @@
         tools:text="2021-04-17" />
 
     <TextView
-        android:id="@+id/single_day_euro_symbol"
+        android:id="@+id/single_day_base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue_navy"
         android:fontFamily="@font/aldrich"
         android:padding="8dp"
-        android:text="@string/euro_symbol"
+        tools:text="1 EUR"
         android:textColor="@color/green_light"
         android:textSize="18sp"
         android:textStyle="bold"
