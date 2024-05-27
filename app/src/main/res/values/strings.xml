@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Euro Exchange Rate</string>
+    <string name="app_name">Currency Assistant</string>
     <string name="cancel">cancel</string>
     <string name="change_default_currency">Change default currency</string>
     <string name="converter">Converter</string>
