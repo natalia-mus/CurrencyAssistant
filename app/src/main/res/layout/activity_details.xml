@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_navy">
+    android:background="@color/blue_navy"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/activity_details_flag"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/eur_flag_circle" />
+
+    <TextView
+        android:id="@+id/activity_details_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/aldrich"
+        android:gravity="center"
+        android:textColor="@color/green_light"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        tools:text="4,56" />
 
-        <TextView
-            android:id="@+id/activity_details_rating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="60dp"
-            android:fontFamily="@font/aldrich"
-            android:gravity="center"
-            android:textColor="@color/green_light"
-            android:textSize="70sp"
-            android:textStyle="bold"
-            tools:text="4,56" />
+    <TextView
+        android:id="@+id/activity_details_currency_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aldrich"
+        android:gravity="center"
+        android:textColor="@color/green_light"
+        android:textSize="40sp"
+        tools:text="PLN" />
 
-        <TextView
-            android:id="@+id/activity_details_currency_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/aldrich"
-            android:gravity="center"
-            android:textColor="@color/green_light"
-            android:textSize="40sp"
-            tools:text="PLN" />
+    <TextView
+        android:id="@+id/activity_details_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_light"
+        android:fontFamily="@font/aldrich"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@color/blue_navy"
+        android:textSize="30sp"
+        tools:text="2013-03-17" />
 
-        <TextView
-            android:id="@+id/activity_details_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/gray_light"
-            android:fontFamily="@font/aldrich"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textColor="@color/blue_navy"
-            android:textSize="30sp"
-            tools:text="2013-03-17" />
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

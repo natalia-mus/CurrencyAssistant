@@ -2,6 +2,7 @@ package com.example.currencyassistant.view
 
 import android.os.Bundle
 import android.util.TypedValue
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.currencyassistant.Constants
@@ -17,6 +18,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var rateDetails: RateDetails
 
+    private lateinit var flag: ImageView
     private lateinit var rating: TextView
     private lateinit var currencyName: TextView
     private lateinit var date: TextView
@@ -44,6 +46,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun setView() {
+        flag = findViewById(R.id.activity_details_flag)
         rating = findViewById(R.id.activity_details_rating)
         currencyName = findViewById(R.id.activity_details_currency_name)
         date = findViewById(R.id.activity_details_date)
@@ -51,6 +54,9 @@ class DetailsActivity : AppCompatActivity() {
         rating.text = rateDetails.rating.toString()
         currencyName.text = rateDetails.currency.name
         date.text = rateDetails.date
+
+        val flagId = rateDetails.currency.getFlagImageId(this)
+        flagId?.let { flag.setImageResource(flagId) }
 
         setTextSize()
     }
