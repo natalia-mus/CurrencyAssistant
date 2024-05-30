@@ -2,10 +2,10 @@
 
 Currency Assistant is an Android app displaying daily exchange rates for selected currency. Scrolling allows to see rates from the previous days.
 
-<br/><br/>
+<br/>
 
 <p align="center">
-<img src="https://github.com/natalia-mus/CurrencyAssistant/assets/56269299/b47d6bf0-bd9f-4ed3-8ee9-0a2c6448ac42" width="36%" height="36%"/>
+<img src="https://github.com/natalia-mus/CurrencyAssistant/assets/56269299/b47d6bf0-bd9f-4ed3-8ee9-0a2c6448ac42" width="40%" height="40%"/>
 </p>
 
 <br/><br/>
