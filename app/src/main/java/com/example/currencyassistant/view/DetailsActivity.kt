@@ -20,7 +20,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var flag: ImageView
     private lateinit var rating: TextView
-    private lateinit var currencyName: TextView
+    private lateinit var currencyCode: TextView
     private lateinit var date: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +48,11 @@ class DetailsActivity : AppCompatActivity() {
     private fun setView() {
         flag = findViewById(R.id.activity_details_flag)
         rating = findViewById(R.id.activity_details_rating)
-        currencyName = findViewById(R.id.activity_details_currency_name)
+        currencyCode = findViewById(R.id.activity_details_currency_code)
         date = findViewById(R.id.activity_details_date)
 
         rating.text = rateDetails.rating.toString()
-        currencyName.text = rateDetails.currency.name
+        currencyCode.text = rateDetails.currency.name
         date.text = rateDetails.date
 
         val flagId = rateDetails.currency.getFlagImageId(this)
