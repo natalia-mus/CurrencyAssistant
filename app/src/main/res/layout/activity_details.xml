@@ -30,17 +30,17 @@
 
         <TextView
             android:id="@+id/activity_details_rating"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/aldrich"
             android:gravity="center"
             android:textColor="@color/green_light"
-            android:textSize="50sp"
+            android:textSize="@dimen/converter_value_text_size"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/activity_details_margin"
             app:layout_constraintStart_toEndOf="@id/activity_details_flag"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="4,56" />
@@ -60,13 +60,15 @@
 
         <TextView
             android:id="@+id/activity_details_currency_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:fontFamily="@font/aldrich"
             android:gravity="center"
             android:textColor="@color/green_light"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/activity_details_margin"
             app:layout_constraintStart_toEndOf="@id/activity_details_flag"
             app:layout_constraintTop_toBottomOf="@+id/activity_details_currency_code"
             tools:text="Euro" />
@@ -82,11 +84,19 @@
             android:padding="8dp"
             android:textColor="@color/blue_navy"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/activity_details_flag"
             app:layout_constraintTop_toBottomOf="@id/activity_details_currency_name"
             tools:text="2024-03-17" />
+
+        <LinearLayout
+            android:id="@+id/activity_details_margin"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
