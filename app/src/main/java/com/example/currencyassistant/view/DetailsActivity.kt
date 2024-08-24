@@ -2,6 +2,7 @@ package com.example.currencyassistant.view
 
 import android.os.Bundle
 import android.util.TypedValue
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var currencyCode: TextView
     private lateinit var currencyName: TextView
     private lateinit var date: TextView
+    private lateinit var timeRangeButton: Button
 
     private var formattedRating = ""
 
@@ -40,6 +42,11 @@ class DetailsActivity : AppCompatActivity() {
                 setView()
             }
         }
+    }
+
+    private fun openTimeRangePicker() {
+        val timeRangePicker = TimeRangePicker(this)
+        timeRangePicker.show()
     }
 
     private fun setTextSize() {
@@ -64,6 +71,7 @@ class DetailsActivity : AppCompatActivity() {
         currencyCode = findViewById(R.id.activity_details_currency_code)
         currencyName = findViewById(R.id.activity_details_currency_name)
         date = findViewById(R.id.activity_details_date)
+        timeRangeButton = findViewById(R.id.activity_details_time_range)
 
         rating.text = formattedRating
         currencyCode.text = rateDetails.currency.name
@@ -74,5 +82,9 @@ class DetailsActivity : AppCompatActivity() {
         flagId?.let { flag.setImageResource(flagId) }
 
         setTextSize()
+
+        timeRangeButton.setOnClickListener {
+            openTimeRangePicker()
+        }
     }
 }

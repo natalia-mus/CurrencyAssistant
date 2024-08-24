@@ -8,4 +8,8 @@
     <string name="euro_symbol">1€:</string>
     <string name="rates">Rates</string>
     <string name="save">save</string>
+    <string name="select_time_range">select time range:</string>
+    <string name="last_week">last week</string>
+    <string name="last_month">last month</string>
+    <string name="last_year">last year</string>
 </resources>

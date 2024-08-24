@@ -101,6 +101,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
+        android:id="@+id/activity_details_time_range"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"

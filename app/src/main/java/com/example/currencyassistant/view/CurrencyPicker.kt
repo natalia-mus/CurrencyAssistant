@@ -47,7 +47,6 @@ class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedActio
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.currency_picker)
-
         setView()
     }
 
