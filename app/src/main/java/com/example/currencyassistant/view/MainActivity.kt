@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
     }
 
     override fun changeCurrency(currency: Currency) {
-        Settings.changeDefaultCurrency(currency)
+        Settings.setDefaultCurrency(currency)
         currentFragment.onBaseCurrencyChanged()
     }
 

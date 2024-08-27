@@ -1,35 +1,32 @@
 package com.example.currencyassistant.view
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.currencyassistant.R
+import com.example.currencyassistant.Settings
 import com.example.currencyassistant.TimeRange
 
-class TimeRangePicker(context: Context) : Dialog(context) {
+class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker, DIALOG_WIDTH, DIALOG_HEIGHT) {
 
     companion object {
-        private const val DESIGN_HEIGHT = 731f
-        private const val DESIGN_WIDTH = 430f
-
-        private const val DIALOG_HEIGHT = 220f
         private const val DIALOG_WIDTH = 400f
+        private const val DIALOG_HEIGHT = 220f
     }
 
     private lateinit var lastWeek: TextView
     private lateinit var lastMonth: TextView
     private lateinit var lastYear: TextView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.time_range_picker)
+        super.onCreate(savedInstanceState)
         setView()
     }
 
-    private fun changeTimeRange(timeRange: TimeRange) {
-        // todo
+    private fun setTimeRange(timeRange: TimeRange) {
+        Settings.setTimeRange(timeRange)
         dismiss()
     }
 
@@ -39,36 +36,30 @@ class TimeRangePicker(context: Context) : Dialog(context) {
         lastYear = findViewById(R.id.time_range_picker_last_year)
 
         lastWeek.setOnClickListener {
-            changeTimeRange(TimeRange.LAST_WEEK)
+            setTimeRange(TimeRange.LAST_WEEK)
         }
 
         lastMonth.setOnClickListener {
-            changeTimeRange(TimeRange.LAST_MONTH)
+            setTimeRange(TimeRange.LAST_MONTH)
         }
 
         lastYear.setOnClickListener {
-            changeTimeRange(TimeRange.LAST_YEAR)
+            setTimeRange(TimeRange.LAST_YEAR)
         }
 
-        val dialogWindow: ConstraintLayout = findViewById(R.id.time_range_picker)
-        val layoutParams = dialogWindow.layoutParams
-        layoutParams.width = calcHorizontal(DIALOG_WIDTH)
-        layoutParams.height = calcVertical(DIALOG_HEIGHT)
+        selectTimeRange()
     }
 
-    /**
-     * Calculates horizontal dimension according to the device width in order to keep element's scale
-     */
-    private fun calcHorizontal(value: Float): Int {
-        val dpWidth = context.resources.displayMetrics.widthPixels
-        return (dpWidth * (value / DESIGN_WIDTH)).toInt()
-    }
+    private fun selectTimeRange() {
+        var option: TextView = when (Settings.getTimeRange()) {
+            TimeRange.LAST_WEEK -> lastWeek
+            TimeRange.LAST_MONTH -> lastMonth
+            TimeRange.LAST_YEAR -> lastYear
+        }
 
-    /**
-     * Calculates vertical dimension according to the device height in order to keep element's scale
-     */
-    private fun calcVertical(value: Float): Int {
-        val dpHeight = context.resources.displayMetrics.heightPixels
-        return (dpHeight * (value / DESIGN_HEIGHT)).toInt()
+        lastWeek.isSelected = false
+        lastMonth.isSelected = false
+        lastYear.isSelected = false
+        option.isSelected = true
     }
 }

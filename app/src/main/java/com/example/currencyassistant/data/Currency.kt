@@ -85,11 +85,6 @@ enum class Currency(val currencyName: String) {
 
             return result
         }
-
-        /**
-         * Returns Currency by given code, null if currency of given code does not exist
-         */
-        fun getByCode(currencyCode: String) = valueOf(currencyCode)
     }
 
     /**

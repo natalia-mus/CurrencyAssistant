@@ -1,27 +1,21 @@
 package com.example.currencyassistant.view
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyassistant.R
 import com.example.currencyassistant.adapter.CurrencyItemAdapter
 import com.example.currencyassistant.data.Currency
 
-class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedAction {
+class CurrencyPicker(context: Context) : Dialog(context, R.id.currency_picker, DIALOG_WIDTH, DIALOG_HEIGHT), OnCurrencyChangedAction {
 
     companion object {
-        private const val DESIGN_HEIGHT = 731f
-        private const val DESIGN_WIDTH = 430f
-
-        private const val DIALOG_HEIGHT = 550f
         private const val DIALOG_WIDTH = 400f
+        private const val DIALOG_HEIGHT = 550f
     }
-
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var saveButton: Button
@@ -39,14 +33,14 @@ class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedActio
         this.onCurrencyChangedAction = onCurrencyChangedAction
     }
 
-    constructor(context: Context, actualConversion: Pair<Currency, Currency>?, onCurrencyChangedAction: OnCurrencyChangedAction): this(context) {
+    constructor(context: Context, actualConversion: Pair<Currency, Currency>?, onCurrencyChangedAction: OnCurrencyChangedAction) : this(context) {
         this.actualConversion = actualConversion
         this.onCurrencyChangedAction = onCurrencyChangedAction
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.currency_picker)
+        super.onCreate(savedInstanceState)
         setView()
     }
 
@@ -58,7 +52,7 @@ class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedActio
         recyclerView = findViewById(R.id.currency_picker_recyclerView)
         cancelButton = findViewById(R.id.currency_picker_cancel)
 
-        cancelButton.setOnClickListener() {
+        cancelButton.setOnClickListener {
             cancel()
         }
 
@@ -74,11 +68,6 @@ class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedActio
         } else {
             cancelButton.setBackgroundColor(context.resources.getColor(R.color.green_light, context.theme))
         }
-
-        val dialogWindow: ConstraintLayout = findViewById(R.id.currency_picker)
-        val layoutParams = dialogWindow.layoutParams
-        layoutParams.width = calcHorizontal(DIALOG_WIDTH)
-        layoutParams.height = calcVertical(DIALOG_HEIGHT)
 
         prepareData()
     }
@@ -99,22 +88,6 @@ class CurrencyPicker(context: Context) : Dialog(context), OnCurrencyChangedActio
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = CurrencyItemAdapter(currenciesSet, context, this, actualDefaultCurrency)
         }
-    }
-
-    /**
-     * Calculates horizontal dimension according to the device width in order to keep element's scale
-     */
-    private fun calcHorizontal(value: Float): Int {
-        val dpWidth = context.resources.displayMetrics.widthPixels
-        return (dpWidth * (value / DESIGN_WIDTH)).toInt()
-    }
-
-    /**
-     * Calculates vertical dimension according to the device height in order to keep element's scale
-     */
-    private fun calcVertical(value: Float): Int {
-        val dpHeight = context.resources.displayMetrics.heightPixels
-        return (dpHeight * (value / DESIGN_HEIGHT)).toInt()
     }
 
 }
