@@ -18,6 +18,8 @@ class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker
     private lateinit var lastMonth: TextView
     private lateinit var lastYear: TextView
 
+    private var timeRangeValueChangedListener: TimeRangeValueChangedListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.time_range_picker)
@@ -25,8 +27,14 @@ class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker
         setView()
     }
 
+    fun setOnTimeRangeValueChangedListener(listener: TimeRangeValueChangedListener) {
+        timeRangeValueChangedListener = listener
+    }
+
     private fun setTimeRange(timeRange: TimeRange) {
         Settings.setTimeRange(timeRange)
+        timeRangeValueChangedListener?.onTimeRangeValueChanged(timeRange)
+        selectTimeRange()
         dismiss()
     }
 
@@ -51,7 +59,7 @@ class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker
     }
 
     private fun selectTimeRange() {
-        var option: TextView = when (Settings.getTimeRange()) {
+        val option: TextView = when (Settings.getTimeRange()) {
             TimeRange.LAST_WEEK -> lastWeek
             TimeRange.LAST_MONTH -> lastMonth
             TimeRange.LAST_YEAR -> lastYear
@@ -62,4 +70,9 @@ class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker
         lastYear.isSelected = false
         option.isSelected = true
     }
+
+}
+
+interface TimeRangeValueChangedListener {
+    fun onTimeRangeValueChanged(timeRange: TimeRange)
 }

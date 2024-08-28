@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.currencyassistant.Constants
 import com.example.currencyassistant.R
+import com.example.currencyassistant.Settings
+import com.example.currencyassistant.TimeRange
 import com.example.currencyassistant.data.RateDetails
 import com.example.currencyassistant.util.Converter
 
@@ -16,6 +18,12 @@ class DetailsActivity : AppCompatActivity() {
     companion object {
         private const val CHARACTERS_FIRST_LIMIT = 5
         private const val CHARACTERS_SECOND_LIMIT = 6
+    }
+
+    private val timeRangeValueChangedListener = object : TimeRangeValueChangedListener {
+        override fun onTimeRangeValueChanged(timeRange: TimeRange) {
+            setTimeRange(timeRange)
+        }
     }
 
     private lateinit var rateDetails: RateDetails
@@ -28,6 +36,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var timeRangeButton: Button
 
     private var formattedRating = ""
+    private var timeRangePicker: TimeRangePicker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +51,17 @@ class DetailsActivity : AppCompatActivity() {
                 setView()
             }
         }
+
+        setTimeRange(null)
     }
 
     private fun openTimeRangePicker() {
-        val timeRangePicker = TimeRangePicker(this)
-        timeRangePicker.show()
+        if (timeRangePicker == null) {
+            timeRangePicker = TimeRangePicker(this)
+            timeRangePicker?.setOnTimeRangeValueChangedListener(timeRangeValueChangedListener)
+        }
+
+        timeRangePicker?.show()
     }
 
     private fun setTextSize() {
@@ -63,6 +78,14 @@ class DetailsActivity : AppCompatActivity() {
                 rating.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.converter_value_text_size_tiny))
             }
         }
+    }
+
+    private fun setTimeRange(timeRange: TimeRange?) {
+        var value = timeRange
+        if (value == null) {
+            value = Settings.getTimeRange()
+        }
+        timeRangeButton.text = value.getText(this)
     }
 
     private fun setView() {
