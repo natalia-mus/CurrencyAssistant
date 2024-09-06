@@ -7,12 +7,7 @@ import com.example.currencyassistant.R
 import com.example.currencyassistant.Settings
 import com.example.currencyassistant.TimeRange
 
-class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker, DIALOG_WIDTH, DIALOG_HEIGHT) {
-
-    companion object {
-        private const val DIALOG_WIDTH = 400f
-        private const val DIALOG_HEIGHT = 220f
-    }
+class TimeRangePicker(context: Context) : Dialog(context, R.id.time_range_picker) {
 
     private lateinit var lastWeek: TextView
     private lateinit var lastMonth: TextView
