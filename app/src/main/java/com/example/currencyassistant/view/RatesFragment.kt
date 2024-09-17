@@ -51,7 +51,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     override fun onBaseCurrencyChanged() {
         loading(true)
-        viewModel.getNewData()
+        viewModel.getNewData(true)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

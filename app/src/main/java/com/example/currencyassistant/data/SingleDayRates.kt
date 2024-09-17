@@ -4,7 +4,7 @@ data class SingleDayRates(
     val success: Boolean,
     var base: String,
     val date: String,
-    private val rates: Rates
+    val rates: Rates
 ) {
 
     private lateinit var currencies: ArrayList<RateDetails>
@@ -36,6 +36,7 @@ data class SingleDayRates(
             val czk = RateDetails(Currency.CZK, rates.getRateByCurrencyCode(Currency.CZK), date)
             val dkk = RateDetails(Currency.DKK, rates.getRateByCurrencyCode(Currency.DKK), date)
             val egp = RateDetails(Currency.EGP, rates.getRateByCurrencyCode(Currency.EGP), date)
+            val eur = RateDetails(Currency.EUR, rates.getRateByCurrencyCode(Currency.EUR), date)
             val gbp = RateDetails(Currency.GBP, rates.getRateByCurrencyCode(Currency.GBP), date)
             val gel = RateDetails(Currency.GEL, rates.getRateByCurrencyCode(Currency.GEL), date)
             val gip = RateDetails(Currency.GIP, rates.getRateByCurrencyCode(Currency.GIP), date)
@@ -103,6 +104,7 @@ data class SingleDayRates(
             currencies.add(czk)
             currencies.add(dkk)
             currencies.add(egp)
+            currencies.add(eur)
             currencies.add(gbp)
             currencies.add(gel)
             currencies.add(gip)

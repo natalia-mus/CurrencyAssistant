@@ -21,17 +21,17 @@ class RatesViewModel : ViewModel() {
     private var array: MutableList<SingleDayRates> = ArrayList()
 
 
-    fun getNewData() {
+    fun getNewData(forceRetrievingNewData: Boolean = false) {
         array.clear()
         selectedDateRates.value?.clear()
         daysInRecycler.value = 0
-        getNextDayRates()
+        getNextDayRates(forceRetrievingNewData)
     }
 
-    fun getNextDayRates() {
+    fun getNextDayRates(forceRetrievingNewData: Boolean = false) {
         val date = daysInRecycler.value?.let { DateUtil.getDate(it) }
         if (date != null) {
-            getData(date)
+            getData(date, forceRetrievingNewData)
         }
     }
 
@@ -49,13 +49,6 @@ class RatesViewModel : ViewModel() {
                     }
                 }
 
-                if (singleDayRate.base != Currency.EUR.name) {
-                    // add euro to currencies list
-                    val euroRating = Converter.convert(defaultCurrency, Currency.EUR, 1.0, singleDayRate)
-                    val euro = RateDetails(Currency.EUR, euroRating, singleDayRate.date)
-                    convertedRates.add(euro)
-                }
-
                 singleDayRate.setConvertedCurrenciesList(convertedRates)
             }
         }
@@ -63,10 +56,10 @@ class RatesViewModel : ViewModel() {
         return singleDayRates
     }
 
-    private fun getData(date: String) {
+    private fun getData(date: String, forceRetrievingNewData: Boolean) {
         loading.value = true
 
-        Repository.getDataFromAPI(date, object : RepositoryCallback<SingleDayRates> {
+        Repository.getRatesByDate(date, object : RepositoryCallback<SingleDayRates> {
             override fun onSuccess(data: SingleDayRates?) {
                 if (data != null && data.success) {
                     val response = prepareResponse(data)
@@ -87,7 +80,7 @@ class RatesViewModel : ViewModel() {
                 success.value = false
                 loading.value = false
             }
-        })
+        }, forceRetrievingNewData)
     }
 
     /**

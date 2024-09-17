@@ -21,18 +21,44 @@ object Repository {
 
     private val apiService: APIService = retrofit.create(APIService::class.java)
 
+    private val cache: ArrayList<SingleDayRates> = ArrayList()
 
-    fun getDataFromAPI(date: String, callback: RepositoryCallback<SingleDayRates>) {
-        apiService.getSingleDay(date, ACCESS_KEY).enqueue(object : Callback<SingleDayRates> {
-            override fun onResponse(call: Call<SingleDayRates>, response: Response<SingleDayRates>) {
-                if (response.isSuccessful) {
-                    callback.onSuccess(response.body())
+
+    fun getRatesByDate(date: String, callback: RepositoryCallback<SingleDayRates>, forceRetrievingNewData: Boolean = false) {
+        val rates: SingleDayRates? = if (forceRetrievingNewData) {
+            cache.clear()
+            null
+        } else {
+            getRatesFromCache(date)
+        }
+
+        if (rates != null) {
+            callback.onSuccess(rates)
+        } else {
+            apiService.getSingleDay(date, ACCESS_KEY).enqueue(object : Callback<SingleDayRates> {
+                override fun onResponse(call: Call<SingleDayRates>, response: Response<SingleDayRates>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let { cache.add(it.copy()) }
+                        callback.onSuccess(response.body())
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<SingleDayRates>, t: Throwable) {
-                callback.onError()
+                override fun onFailure(call: Call<SingleDayRates>, t: Throwable) {
+                    callback.onError()
+                }
+            })
+        }
+    }
+
+    /**
+     * Retrieves data from cache if exists
+     */
+    private fun getRatesFromCache(date: String): SingleDayRates? {
+        for (element in cache) {
+            if (element.date == date) {
+                return element
             }
-        })
+        }
+        return null
     }
 }

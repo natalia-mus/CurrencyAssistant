@@ -15,8 +15,6 @@ class CurrencyConverterViewModel : ViewModel() {
     val conversionErrorOccurred = MutableLiveData<Boolean>(false)
     val convertedValue = MutableLiveData<Double>()
 
-    private var rates: SingleDayRates? = null
-
     private val today = DateUtil.getDate(0)
 
 
@@ -44,39 +42,32 @@ class CurrencyConverterViewModel : ViewModel() {
         }
     }
 
-    private fun convert(value: Double) {
+    private fun convert(value: Double, rates: SingleDayRates) {
         if (actualConversion.value != null) {
-            convertedValue.value = Converter.convert(actualConversion.value!!.first, actualConversion.value!!.second, value, rates!!)
+            convertedValue.value = Converter.convert(actualConversion.value!!.first, actualConversion.value!!.second, value, rates)
         }
     }
 
     private fun convertCurrency(value: Double) {
         conversionErrorOccurred.value = false
 
-        if (rates == null || (rates!!.date != today)) {
-            Repository.getDataFromAPI(today, object : RepositoryCallback<SingleDayRates> {
-                override fun onSuccess(data: SingleDayRates?) {
-                    if (data != null && data.success) {
-                        rates = data
-                        convert(value)
+        Repository.getRatesByDate(today, object : RepositoryCallback<SingleDayRates> {
+            override fun onSuccess(data: SingleDayRates?) {
+                if (data != null && data.success) {
+                    convert(value, data)
 
-                    } else {
-                        handleError()
-                    }
-                }
-
-                override fun onError() {
+                } else {
                     handleError()
                 }
-            })
+            }
 
-        } else {
-            convert(value)
-        }
+            override fun onError() {
+                handleError()
+            }
+        })
     }
 
     private fun handleError() {
-        rates = null
         conversionErrorOccurred.value = true
     }
 
