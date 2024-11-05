@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.currencyassistant.R
 import com.example.currencyassistant.Settings
 import com.example.currencyassistant.data.Currency
+import com.example.currencyassistant.database.CacheRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity(), OnCurrencyChangedAction {
 
         navigation = findViewById(R.id.activity_main_bottomNavigation)
         Settings.init(this)
+        CacheRepository.init(this)
 
         setOnNavigationItemSelectedListener()
         changeFragment(currentFragment)

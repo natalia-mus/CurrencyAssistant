@@ -1,6 +1,10 @@
 package com.example.currencyassistant.api
 
 import com.example.currencyassistant.data.SingleDayRates
+import com.example.currencyassistant.data.SingleDayRatesCache
+import com.example.currencyassistant.database.CacheRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +42,7 @@ object Repository {
             apiService.getSingleDay(date, ACCESS_KEY).enqueue(object : Callback<SingleDayRates> {
                 override fun onResponse(call: Call<SingleDayRates>, response: Response<SingleDayRates>) {
                     if (response.isSuccessful) {
-                        response.body()?.let { cache.add(it.copy()) }
+                        response.body()?.let { addRatesToCache(it) }
                         callback.onSuccess(response.body())
                     }
                 }
@@ -47,6 +51,12 @@ object Repository {
                     callback.onError()
                 }
             })
+        }
+    }
+
+    private fun addRatesToCache(singleDayRates: SingleDayRates) {
+        GlobalScope.launch {
+            CacheRepository.addToCache(SingleDayRatesCache(singleDayRates))
         }
     }
 
