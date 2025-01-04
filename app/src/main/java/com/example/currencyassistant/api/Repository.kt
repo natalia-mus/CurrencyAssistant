@@ -1,7 +1,6 @@
 package com.example.currencyassistant.api
 
 import com.example.currencyassistant.data.SingleDayRates
-import com.example.currencyassistant.data.SingleDayRatesCache
 import com.example.currencyassistant.database.CacheRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -56,7 +55,7 @@ object Repository {
 
     private fun addRatesToCache(singleDayRates: SingleDayRates) {
         GlobalScope.launch {
-            CacheRepository.addToCache(SingleDayRatesCache(singleDayRates))
+            CacheRepository.addToCache(singleDayRates)
         }
     }
 
@@ -64,11 +63,7 @@ object Repository {
      * Retrieves data from cache if exists
      */
     private fun getRatesFromCache(date: String): SingleDayRates? {
-        for (element in cache) {
-            if (element.date == date) {
-                return element
-            }
-        }
+        // todo
         return null
     }
 }

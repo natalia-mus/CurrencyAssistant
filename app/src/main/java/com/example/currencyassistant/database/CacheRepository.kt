@@ -2,6 +2,7 @@ package com.example.currencyassistant.database
 
 import android.content.Context
 import androidx.room.Room
+import com.example.currencyassistant.data.SingleDayRates
 import com.example.currencyassistant.data.SingleDayRatesCache
 
 object CacheRepository {
@@ -17,7 +18,14 @@ object CacheRepository {
         }
     }
 
-    fun addToCache(singleDayRatesCache: SingleDayRatesCache) {
-        database?.cacheDao()?.insert(singleDayRatesCache)
+    fun addToCache(singleDayRates: SingleDayRates) {
+        if (getFromCache(singleDayRates.date) == null) {
+            val singleDayRatesCache = SingleDayRatesCache(singleDayRates)
+            database?.cacheDao()?.insert(singleDayRatesCache)
+        }
+    }
+
+    fun getFromCache(date: String): SingleDayRatesCache? {
+        return database?.cacheDao()?.getCacheByDate(date)
     }
 }
