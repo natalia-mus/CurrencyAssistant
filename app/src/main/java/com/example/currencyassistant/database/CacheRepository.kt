@@ -19,10 +19,8 @@ object CacheRepository {
     }
 
     fun addToCache(singleDayRates: SingleDayRates) {
-        if (getFromCache(singleDayRates.date) == null) {
-            val singleDayRatesCache = SingleDayRatesCache(singleDayRates)
-            database?.cacheDao()?.insert(singleDayRatesCache)
-        }
+        val singleDayRatesCache = SingleDayRatesCache(singleDayRates)
+        database?.cacheDao()?.insert(singleDayRatesCache)
     }
 
     fun getFromCache(date: String): SingleDayRatesCache? {
