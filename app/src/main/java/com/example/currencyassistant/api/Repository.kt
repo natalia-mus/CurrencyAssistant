@@ -3,6 +3,7 @@ package com.example.currencyassistant.api
 import com.example.currencyassistant.data.SingleDayRates
 import com.example.currencyassistant.database.CacheRepository
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,12 +25,10 @@ object Repository {
 
     private val apiService: APIService = retrofit.create(APIService::class.java)
 
-    private val cache: ArrayList<SingleDayRates> = ArrayList()
 
-
-    fun getRatesByDate(date: String, callback: RepositoryCallback<SingleDayRates>, forceRetrievingNewData: Boolean = false) {
+    suspend fun getRatesByDate(date: String, callback: RepositoryCallback<SingleDayRates>, forceRetrievingNewData: Boolean = false) {
         val rates: SingleDayRates? = if (forceRetrievingNewData) {
-            cache.clear()
+            // todo - clear cache (only for the given date)
             null
         } else {
             getRatesFromCache(date)
@@ -62,8 +61,16 @@ object Repository {
     /**
      * Retrieves data from cache if exists
      */
-    private fun getRatesFromCache(date: String): SingleDayRates? {
-        // todo
-        return null
+    private suspend fun getRatesFromCache(date: String): SingleDayRates? {
+        val result = GlobalScope.async {
+            val ratesFromCache = CacheRepository.getFromCache(date)
+            if (ratesFromCache != null) {
+                SingleDayRates(true, ratesFromCache.base, ratesFromCache.date, ratesFromCache.rates)
+            } else {
+                null
+            }
+        }
+
+        return result.await()
     }
 }

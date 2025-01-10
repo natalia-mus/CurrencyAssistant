@@ -21,14 +21,14 @@ class RatesViewModel : ViewModel() {
     private var array: MutableList<SingleDayRates> = ArrayList()
 
 
-    fun getNewData(forceRetrievingNewData: Boolean = false) {
+    suspend fun getNewData(forceRetrievingNewData: Boolean = false) {
         array.clear()
         selectedDateRates.value?.clear()
-        daysInRecycler.value = 0
+        daysInRecycler.postValue(0)
         getNextDayRates(forceRetrievingNewData)
     }
 
-    fun getNextDayRates(forceRetrievingNewData: Boolean = false) {
+    suspend fun getNextDayRates(forceRetrievingNewData: Boolean = false) {
         val date = daysInRecycler.value?.let { DateUtil.getDate(it) }
         if (date != null) {
             getData(date, forceRetrievingNewData)
@@ -56,8 +56,8 @@ class RatesViewModel : ViewModel() {
         return singleDayRates
     }
 
-    private fun getData(date: String, forceRetrievingNewData: Boolean) {
-        loading.value = true
+    private suspend fun getData(date: String, forceRetrievingNewData: Boolean) {
+        loading.postValue(true)
 
         Repository.getRatesByDate(date, object : RepositoryCallback<SingleDayRates> {
             override fun onSuccess(data: SingleDayRates?) {
@@ -67,18 +67,18 @@ class RatesViewModel : ViewModel() {
 
                     val defaultCurrency = Settings.getDefaultCurrency()
                     array = convertRatesToDefaultCurrency(array, defaultCurrency)
-                    selectedDateRates.value = array
-                    daysInRecycler.value = daysInRecycler.value?.toInt()?.plus(1)
-                    success.value = true
+                    selectedDateRates.postValue(array)
+                    daysInRecycler.postValue(daysInRecycler.value?.toInt()?.plus(1))
+                    success.postValue(true)
                 } else {
-                    success.value = false
+                    success.postValue(false)
                 }
-                loading.value = false
+                loading.postValue(false)
             }
 
             override fun onError() {
-                success.value = false
-                loading.value = false
+                success.postValue(false)
+                loading.postValue(false)
             }
         }, forceRetrievingNewData)
     }

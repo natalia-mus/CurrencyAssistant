@@ -3,7 +3,6 @@ package com.example.currencyassistant.database
 import android.content.Context
 import androidx.room.Room
 import com.example.currencyassistant.data.SingleDayRates
-import com.example.currencyassistant.data.SingleDayRatesCache
 
 object CacheRepository {
 

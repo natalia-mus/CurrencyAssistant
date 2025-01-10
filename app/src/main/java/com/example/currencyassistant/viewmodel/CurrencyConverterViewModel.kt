@@ -8,6 +8,8 @@ import com.example.currencyassistant.data.Currency
 import com.example.currencyassistant.data.SingleDayRates
 import com.example.currencyassistant.util.Converter
 import com.example.currencyassistant.util.DateUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CurrencyConverterViewModel : ViewModel() {
 
@@ -36,7 +38,7 @@ class CurrencyConverterViewModel : ViewModel() {
         }
 
         if (value != null) {
-            convertCurrency(value)
+            GlobalScope.launch { convertCurrency(value) }
         } else {
             convertedValue.value = 0.0
         }
@@ -44,12 +46,12 @@ class CurrencyConverterViewModel : ViewModel() {
 
     private fun convert(value: Double, rates: SingleDayRates) {
         if (actualConversion.value != null) {
-            convertedValue.value = Converter.convert(actualConversion.value!!.first, actualConversion.value!!.second, value, rates)
+            convertedValue.postValue(Converter.convert(actualConversion.value!!.first, actualConversion.value!!.second, value, rates))
         }
     }
 
-    private fun convertCurrency(value: Double) {
-        conversionErrorOccurred.value = false
+    private suspend fun convertCurrency(value: Double) {
+        conversionErrorOccurred.postValue(false)
 
         Repository.getRatesByDate(today, object : RepositoryCallback<SingleDayRates> {
             override fun onSuccess(data: SingleDayRates?) {

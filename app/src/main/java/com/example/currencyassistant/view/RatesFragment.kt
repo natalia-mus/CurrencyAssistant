@@ -17,6 +17,8 @@ import com.example.currencyassistant.adapter.SingleDayAdapter
 import com.example.currencyassistant.data.RateDetails
 import com.example.currencyassistant.data.SingleDayRates
 import com.example.currencyassistant.viewmodel.RatesViewModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
@@ -51,7 +53,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     override fun onBaseCurrencyChanged() {
         loading(true)
-        viewModel.getNewData(true)
+        GlobalScope.launch { viewModel.getNewData(true) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -78,7 +80,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
                 _scrollPosition += dy
 
                 if (_scrollPosition >= bottom) {
-                    viewModel.getNextDayRates()
+                    GlobalScope.launch { viewModel.getNextDayRates() }
                     _scrollPosition = 0
                 }
 
@@ -96,7 +98,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
         }
 
         if (!_todayAlreadyFetched) {
-            viewModel.getNextDayRates()
+            GlobalScope.launch { viewModel.getNextDayRates() }
             _todayAlreadyFetched = true
         }
 
