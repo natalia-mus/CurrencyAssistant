@@ -227,9 +227,7 @@ class RatesConverter {
                 zar,
                 zmw
             )
-        } else {
-            return null
-        }
+        } else return null
     }
 
     private fun getValueByCurrencyCode(ratesAsString: String, currency: Currency): Double? {

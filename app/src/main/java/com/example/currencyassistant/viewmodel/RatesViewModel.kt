@@ -29,41 +29,38 @@ class RatesViewModel : ViewModel() {
     }
 
     suspend fun getNextDayRates(forceRetrievingNewData: Boolean = false) {
-        val date = daysInRecycler.value?.let { DateUtil.getDate(it) }
+        val date = if (forceRetrievingNewData) DateUtil.getDate(0) else daysInRecycler.value?.let { DateUtil.getDate(it) }
         if (date != null) {
             getData(date, forceRetrievingNewData)
         }
     }
 
-    private fun convertRatesToDefaultCurrency(singleDayRates: MutableList<SingleDayRates>, defaultCurrency: Currency): MutableList<SingleDayRates> {
+    private fun convertRatesToDefaultCurrency(singleDayRates: SingleDayRates, defaultCurrency: Currency): SingleDayRates {
         if (defaultCurrency != Currency.EUR) {
-            for (singleDayRate in singleDayRates) {
-                singleDayRate.base = defaultCurrency.name
-                val convertedRates = ArrayList<RateDetails>()
+            singleDayRates.base = defaultCurrency.name
+            val convertedRates = ArrayList<RateDetails>()
 
-                for (rate in singleDayRate.getCurrenciesList()) {
-                    if (rate.currency != defaultCurrency) {
-                        val convertedRate = Converter.convert(defaultCurrency, rate.currency, 1.0, singleDayRate)
-                        rate.rating = convertedRate
-                        convertedRates.add(rate)
-                    }
+            for (rate in singleDayRates.getCurrenciesList()) {
+                if (rate.currency != defaultCurrency) {
+                    val convertedRate = Converter.convert(defaultCurrency, rate.currency, 1.0, singleDayRates)
+                    rate.rating = convertedRate
+                    convertedRates.add(rate)
                 }
-
-                singleDayRate.setConvertedCurrenciesList(convertedRates)
             }
+
+            singleDayRates.setConvertedCurrenciesList(convertedRates)
+
         } else {
             // remove euro from ratings
-            for (singleDayRate in singleDayRates) {
-                val convertedRates = ArrayList<RateDetails>()
+            val convertedRates = ArrayList<RateDetails>()
 
-                for (rate in singleDayRate.getCurrenciesList()) {
-                    if (rate.currency != defaultCurrency) {
-                        convertedRates.add(rate)
-                    }
+            for (rate in singleDayRates.getCurrenciesList()) {
+                if (rate.currency != defaultCurrency) {
+                    convertedRates.add(rate)
                 }
-
-                singleDayRate.setConvertedCurrenciesList(convertedRates)
             }
+
+            singleDayRates.setConvertedCurrenciesList(convertedRates)
         }
 
         return singleDayRates
@@ -76,10 +73,11 @@ class RatesViewModel : ViewModel() {
             override fun onSuccess(data: SingleDayRates?) {
                 if (data != null && data.success) {
                     val response = prepareResponse(data)
-                    array.add(response)
 
                     val defaultCurrency = Settings.getDefaultCurrency()
-                    array = convertRatesToDefaultCurrency(array, defaultCurrency)
+                    val convertedToDefaultCurrency = convertRatesToDefaultCurrency(response, defaultCurrency)
+                    array.add(convertedToDefaultCurrency)
+
                     selectedDateRates.postValue(array)
                     daysInRecycler.postValue(daysInRecycler.value?.toInt()?.plus(1))
                     success.postValue(true)
