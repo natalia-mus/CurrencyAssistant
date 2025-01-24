@@ -51,6 +51,19 @@ class RatesViewModel : ViewModel() {
 
                 singleDayRate.setConvertedCurrenciesList(convertedRates)
             }
+        } else {
+            // remove euro from ratings
+            for (singleDayRate in singleDayRates) {
+                val convertedRates = ArrayList<RateDetails>()
+
+                for (rate in singleDayRate.getCurrenciesList()) {
+                    if (rate.currency != defaultCurrency) {
+                        convertedRates.add(rate)
+                    }
+                }
+
+                singleDayRate.setConvertedCurrenciesList(convertedRates)
+            }
         }
 
         return singleDayRates

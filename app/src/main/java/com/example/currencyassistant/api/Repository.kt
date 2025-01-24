@@ -1,5 +1,6 @@
 package com.example.currencyassistant.api
 
+import com.example.currencyassistant.data.Rates
 import com.example.currencyassistant.data.SingleDayRates
 import com.example.currencyassistant.database.CacheRepository
 import kotlinx.coroutines.GlobalScope
@@ -66,9 +67,7 @@ object Repository {
             val ratesFromCache = CacheRepository.getFromCache(date)
             if (ratesFromCache != null) {
                 SingleDayRates(true, ratesFromCache.base, ratesFromCache.date, ratesFromCache.rates)
-            } else {
-                null
-            }
+            } else null
         }
 
         return result.await()

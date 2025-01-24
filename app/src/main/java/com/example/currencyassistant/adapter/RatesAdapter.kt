@@ -35,7 +35,7 @@ class RatesAdapter(
         holder.currencyName.text = rate.currency.currencyName
         holder.rating.text = Converter.formatValueToString(rate.rating)
 
-        holder.row.setOnClickListener() {
+        holder.row.setOnClickListener {
             onItemClickAction.itemClicked(rate)
         }
     }
