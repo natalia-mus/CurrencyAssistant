@@ -21,18 +21,22 @@ class RatesViewModel : ViewModel() {
     private var array: MutableList<SingleDayRates> = ArrayList()
 
 
-    suspend fun getNewData(forceRetrievingNewData: Boolean = false) {
-        array.clear()
-        selectedDateRates.value?.clear()
-        daysInRecycler.postValue(0)
-        getNextDayRates(forceRetrievingNewData)
+    fun convertRatesAfterDefaultCurrencyChanged() {
+        loading.value = true
+
+        val defaultCurrency = Settings.getDefaultCurrency()
+        for (singleDayRates in array) {
+            convertRatesToDefaultCurrency(singleDayRates, defaultCurrency)
+        }
+
+        selectedDateRates.value = array
+        success.value = true
+        loading.value = false
     }
 
-    suspend fun getNextDayRates(forceRetrievingNewData: Boolean = false) {
-        val date = if (forceRetrievingNewData) DateUtil.getDate(0) else daysInRecycler.value?.let { DateUtil.getDate(it) }
-        if (date != null) {
-            getData(date, forceRetrievingNewData)
-        }
+    suspend fun getNextDayRates() {
+        val date = daysInRecycler.value?.let { DateUtil.getDate(it) }
+        date?.let { getData(it) }
     }
 
     private fun convertRatesToDefaultCurrency(singleDayRates: SingleDayRates, defaultCurrency: Currency): SingleDayRates {
@@ -44,29 +48,18 @@ class RatesViewModel : ViewModel() {
                 if (rate.currency != defaultCurrency) {
                     val convertedRate = Converter.convert(defaultCurrency, rate.currency, 1.0, singleDayRates)
                     rate.rating = convertedRate
-                    convertedRates.add(rate)
                 }
+                convertedRates.add(rate)
             }
 
             singleDayRates.setConvertedCurrenciesList(convertedRates)
 
-        } else {
-            // remove euro from ratings
-            val convertedRates = ArrayList<RateDetails>()
-
-            for (rate in singleDayRates.getCurrenciesList()) {
-                if (rate.currency != defaultCurrency) {
-                    convertedRates.add(rate)
-                }
-            }
-
-            singleDayRates.setConvertedCurrenciesList(convertedRates)
         }
 
         return singleDayRates
     }
 
-    private suspend fun getData(date: String, forceRetrievingNewData: Boolean) {
+    private suspend fun getData(date: String) {
         loading.postValue(true)
 
         Repository.getRatesByDate(date, object : RepositoryCallback<SingleDayRates> {
@@ -91,7 +84,7 @@ class RatesViewModel : ViewModel() {
                 success.postValue(false)
                 loading.postValue(false)
             }
-        }, forceRetrievingNewData)
+        })
     }
 
     /**

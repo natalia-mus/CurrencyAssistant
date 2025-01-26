@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyassistant.Constants
 import com.example.currencyassistant.R
+import com.example.currencyassistant.Settings
 import com.example.currencyassistant.adapter.RatesAdapter
 import com.example.currencyassistant.adapter.SingleDayAdapter
 import com.example.currencyassistant.data.RateDetails
@@ -53,7 +54,7 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
 
     override fun onBaseCurrencyChanged() {
         loading(true)
-        GlobalScope.launch { viewModel.getNewData(true) }
+        viewModel.convertRatesAfterDefaultCurrencyChanged()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -113,10 +114,10 @@ class RatesFragment : CurrencyFragment(), RatesAdapter.OnItemClickAction {
     private fun updateView(data: MutableList<SingleDayRates>?) {
         if (data != null) {
             if (::adapter.isInitialized) {
-                adapter.dataSetChanged(data)
+                adapter.dataSetChanged(data, Settings.getDefaultCurrency())
             } else {
                 layoutManager = LinearLayoutManager(requireContext())
-                adapter = SingleDayAdapter(data, requireContext(), this)
+                adapter = SingleDayAdapter(data, Settings.getDefaultCurrency(), requireContext(), this)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.adapter = adapter
             }

@@ -9,11 +9,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyassistant.R
+import com.example.currencyassistant.data.Currency
 import com.example.currencyassistant.data.RateDetails
 import com.example.currencyassistant.util.Converter
 
 class RatesAdapter(
     private val currencies: ArrayList<RateDetails>,
+    private val defaultCurrency: Currency,
     private val context: Context,
     private val onItemClickAction: OnItemClickAction
 ) :
@@ -26,17 +28,23 @@ class RatesAdapter(
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
         val rate = currencies[position]
 
-        val flag = rate.currency.getFlagImageId(context)
-        if (flag != null) {
-            holder.flag.setImageResource(flag)
-        }
+        if (rate.currency == defaultCurrency) {
+            // hide default currency row
+            holder.row.visibility = View.GONE
 
-        holder.currencyCode.text = rate.currency.name
-        holder.currencyName.text = rate.currency.currencyName
-        holder.rating.text = Converter.formatValueToString(rate.rating)
+        } else {
+            val flag = rate.currency.getFlagImageId(context)
+            if (flag != null) {
+                holder.flag.setImageResource(flag)
+            }
 
-        holder.row.setOnClickListener {
-            onItemClickAction.itemClicked(rate)
+            holder.currencyCode.text = rate.currency.name
+            holder.currencyName.text = rate.currency.currencyName
+            holder.rating.text = Converter.formatValueToString(rate.rating)
+
+            holder.row.setOnClickListener {
+                onItemClickAction.itemClicked(rate)
+            }
         }
     }
 

@@ -9,10 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyassistant.R
+import com.example.currencyassistant.data.Currency
 import com.example.currencyassistant.data.SingleDayRates
 
 class SingleDayAdapter(
     private var data: MutableList<SingleDayRates>,
+    private var defaultCurrency: Currency,
     private val context: Context,
     private val onItemClickAction: RatesAdapter.OnItemClickAction
 ) : RecyclerView.Adapter<SingleDayViewHolder>() {
@@ -27,13 +29,14 @@ class SingleDayAdapter(
         holder.base.text = "1 " + data[position].base
 
         holder.ratesRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        holder.ratesRecyclerView.adapter = RatesAdapter(data[position].getCurrenciesList(), context, onItemClickAction)
+        holder.ratesRecyclerView.adapter = RatesAdapter(data[position].getCurrenciesList(), defaultCurrency, context, onItemClickAction)
     }
 
     override fun getItemCount() = data.size
 
-    fun dataSetChanged(data: MutableList<SingleDayRates>) {
+    fun dataSetChanged(data: MutableList<SingleDayRates>, defaultCurrency: Currency) {
         this.data = data
+        this.defaultCurrency = defaultCurrency
         notifyDataSetChanged()
     }
 
